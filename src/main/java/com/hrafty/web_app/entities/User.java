@@ -33,7 +33,7 @@ public class User extends Auditable  {
 
     /////Relations///////
 
-    @OneToOne( cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
     private Seller seller;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
