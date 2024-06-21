@@ -42,7 +42,9 @@ public class ServicesService {
         List<Service> services =serviceRepository.findAll();
         List<ServiceDTO> serviceDTOS=new ArrayList<>();
         for(Service service:services){
-            serviceDTOS.add(serviceMapper.toDTO(service));
+            if (service.isStatus()) {
+                serviceDTOS.add(serviceMapper.toDTO(service));
+            }
         }
         return serviceDTOS;
     }
