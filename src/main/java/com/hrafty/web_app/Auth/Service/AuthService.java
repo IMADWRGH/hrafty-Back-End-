@@ -47,6 +47,7 @@ public class AuthService {
     public SellerDTO registerSeller(UserDTO userDTO,SellerDTO sellerDTO) throws Exception {
         User userToSave=userRepository.save(userMapper.toEntity(userDTO));
         Seller seller = sellerMapper.toEntity(sellerDTO);
+        seller.setUser(userToSave);
         Seller seller_save = sellerRepository.save(seller);
         return sellerMapper.toDTO(seller_save);
     }
