@@ -1,17 +1,22 @@
 package com.hrafty.web_app.Auth.Service;
 
 import com.hrafty.web_app.Auth.AuthDTO;
+import com.hrafty.web_app.Repository.AddressRepository;
 import com.hrafty.web_app.Repository.CustomerRepository;
 import com.hrafty.web_app.Repository.SellerRepository;
 import com.hrafty.web_app.Repository.UserRepository;
+import com.hrafty.web_app.dto.AddressDTO;
 import com.hrafty.web_app.dto.CustomerDTO;
 import com.hrafty.web_app.dto.SellerDTO;
 import com.hrafty.web_app.dto.UserDTO;
+import com.hrafty.web_app.entities.Address;
 import com.hrafty.web_app.entities.Customer;
 import com.hrafty.web_app.entities.Seller;
 import com.hrafty.web_app.entities.User;
 import com.hrafty.web_app.exception.EmailNotFoundException;
+import com.hrafty.web_app.exception.InvalidPasswordException;
 import com.hrafty.web_app.exception.RoleNoteFoundException;
+import com.hrafty.web_app.mapper.AddressMapper;
 import com.hrafty.web_app.mapper.CustomerMapper;
 import com.hrafty.web_app.mapper.SellerMapper;
 import com.hrafty.web_app.mapper.UserMapper;
@@ -29,25 +34,31 @@ public class AuthService {
     private final CustomerRepository customerRepository;
     private final SellerMapper sellerMapper;
     private final SellerRepository sellerRepository;
+    private final AddressRepository addressRepository;
+    private final AddressMapper addressMapper;
 
 
 
 
-    public AuthService(UserMapper userMapper, UserRepository userRepository, CustomerMapper customerMapper, CustomerRepository customerRepository, SellerMapper sellerMapper, SellerRepository sellerRepository) {
+    public AuthService(UserMapper userMapper, UserRepository userRepository, CustomerMapper customerMapper, CustomerRepository customerRepository, SellerMapper sellerMapper, SellerRepository sellerRepository, AddressRepository addressRepository, AddressMapper addressMapper) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.customerMapper = customerMapper;
         this.customerRepository = customerRepository;
         this.sellerMapper = sellerMapper;
         this.sellerRepository = sellerRepository;
+        this.addressRepository = addressRepository;
+        this.addressMapper = addressMapper;
     }
 
 
     @Transactional
     public SellerDTO registerSeller(UserDTO userDTO,SellerDTO sellerDTO) throws Exception {
         User userToSave=userRepository.save(userMapper.toEntity(userDTO));
+        Address address= addressRepository.save(addressMapper.toEntity(sellerDTO.getAddressId()));
         Seller seller = sellerMapper.toEntity(sellerDTO);
         seller.setUser(userToSave);
+        seller.setAddress(address);
         Seller seller_save = sellerRepository.save(seller);
         return sellerMapper.toDTO(seller_save);
     }
@@ -67,6 +78,9 @@ public class AuthService {
             throw new EmailNotFoundException("Invalid email or password");
         }
         User user = userOptional.get();
+        if (!user.getPassword().equals(password)) {
+            throw new InvalidPasswordException("Invalid email or password");
+        }
         UserDTO userDTO = userMapper.toDTO(user);
         AuthDTO authResponse = new AuthDTO();
         authResponse.setUser(userDTO);
@@ -74,18 +88,23 @@ public class AuthService {
             String role = userDTO.getRole().name();
             if (role.equals("SELLER")) {
                 Seller seller = user.getSeller();
-                seller.getUser();
-                authResponse.setSeller(sellerMapper.toDTO(seller));
+                SellerDTO sellerDTO = sellerMapper.toDTO(seller);
+                if (seller.getAddress() != null) {
+                    AddressDTO addressDTO = addressMapper.toDTO(seller.getAddress());
+                    sellerDTO.setAddressId(addressDTO);
+                }
+                authResponse.setSeller(sellerDTO);
             } else if (role.equals("CUSTOMER")) {
-                Customer customer =user.getCustomer();
-                customer.getUser();
-                authResponse.setCustomer(customerMapper.toDTO(customer));
+                Customer customer = user.getCustomer();
+                CustomerDTO customerDTO = customerMapper.toDTO(customer);
+                authResponse.setCustomer(customerDTO);
             } else {
                 throw new RoleNoteFoundException("Invalid role");
             }
         }
         return authResponse;
     }
+
 
 
 }
