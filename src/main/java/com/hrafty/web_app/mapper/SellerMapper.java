@@ -2,14 +2,13 @@ package com.hrafty.web_app.mapper;
 
 import com.hrafty.web_app.dto.SellerDTO;
 import com.hrafty.web_app.entities.Seller;
-import com.hrafty.web_app.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class})
+@Mapper(componentModel = "spring", uses = {UserMapper.class,AddressMapper.class})
 public interface SellerMapper {
     SellerMapper INSTANCE = Mappers.getMapper(SellerMapper.class);
 
@@ -30,7 +29,8 @@ public interface SellerMapper {
     }
 
     @Mappings({
-            @Mapping(source = "user.id", target = "userId")
+            @Mapping(source = "user.id", target = "userId"),
+            @Mapping(source = "address.id", target = "addressId"),
     })
     SellerDTO toDTO(Seller entity);
 
