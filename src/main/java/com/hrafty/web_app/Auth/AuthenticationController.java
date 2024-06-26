@@ -28,7 +28,7 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
-    @GetMapping(path = "/login")
+    @PostMapping(path = "/login")
     public ResponseEntity<Object> login(@RequestBody AuthenticationRequest request){
         Object object=authService.login(request.getEmail(), request.getPassword());
        return ResponseEntity.ok(object);
