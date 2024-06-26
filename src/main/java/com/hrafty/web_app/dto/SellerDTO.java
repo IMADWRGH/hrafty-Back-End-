@@ -13,6 +13,15 @@ public class SellerDTO {
     private String phone;
     private String site;
     private Long userId;
+    private AddressDTO addressId;
+
+    public AddressDTO getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(AddressDTO addressId) {
+        this.addressId = addressId;
+    }
 
     public SellerDTO(Long id, Long nb_license, String image, String sexe, String phone, String site, Long userId) {
         this.id = id;
@@ -82,6 +91,7 @@ public class SellerDTO {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
 
     @Override
     public String toString() {

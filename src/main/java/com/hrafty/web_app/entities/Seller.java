@@ -34,6 +34,10 @@ public class Seller extends Auditable{
     @OneToMany(mappedBy = "seller")
     private List<Service> services;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
+
 
     public Seller() {
 
@@ -102,5 +106,14 @@ public class Seller extends Auditable{
 
     public void setServices(List<Service> services) {
         this.services = services;
+    }
+
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
