@@ -1,13 +1,14 @@
 package com.hrafty.web_app.dto;
 
 public class AddressDTO {
-    private  Long id;
+    private Long id;
     private String street;
     private String shop_number;
     private String name_city;
     private String name_regional;
 
-
+    public AddressDTO() {
+    }
 
     public AddressDTO(Long id, String street, String shop_number, String name_city, String name_regional) {
         this.id = id;
@@ -15,9 +16,6 @@ public class AddressDTO {
         this.shop_number = shop_number;
         this.name_city = name_city;
         this.name_regional = name_regional;
-    }
-
-    public AddressDTO() {
     }
 
     public Long getId() {
@@ -58,16 +56,5 @@ public class AddressDTO {
 
     public void setName_regional(String name_regional) {
         this.name_regional = name_regional;
-    }
-
-    @Override
-    public String toString() {
-        return "AddressDTO{" +
-                "id=" + id +
-                ", street='" + street + '\'' +
-                ", shop_number='" + shop_number + '\'' +
-                ", name_city='" + name_city + '\'' +
-                ", name_regional='" + name_regional + '\'' +
-                '}';
     }
 }
