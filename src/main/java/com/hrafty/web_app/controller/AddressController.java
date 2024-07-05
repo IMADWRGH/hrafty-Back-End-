@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "api/v1/address")
 public class AddressController {
@@ -24,5 +26,9 @@ public class AddressController {
     public ResponseEntity<AddressDTO> getSellerAddress(@PathVariable("id")Long id){
         AddressDTO addressSeller=address.getAddressSeller(id);
         return ResponseEntity.status(HttpStatus.OK).body(addressSeller);
+    }
+    @GetMapping(path = "/list")
+    public ResponseEntity<List<String>> getAllCities(){
+        return ResponseEntity.status(HttpStatus.OK).body(address.getAllCities());
     }
 }

@@ -1,9 +1,12 @@
 package com.hrafty.web_app.controller;
 
 
+import com.hrafty.web_app.dto.OrderDTO;
+import com.hrafty.web_app.dto.OrderItemDTO;
 import com.hrafty.web_app.services.Order;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,11 +19,15 @@ public class OrderController {
         this.order = order;
     }
 
-//    @PostMapping("/api/v1/orders")
-//    public ResponseEntity<OrderDTO> createOrder(@RequestBody List<OrderItemDTO> orderItemsDTO) {
-//        return new ResponseEntity<>(orderDTO, HttpStatus.CREATED);
-//
-//    }
+    @PostMapping("/add/{customerId}")
+    public ResponseEntity<OrderDTO> createOrder(@PathVariable Long customerId, @RequestBody List<OrderItemDTO> orderItemsDTO) {
+        try {
+            OrderDTO createdOrder = order.create(customerId, orderItemsDTO);
+            return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }
