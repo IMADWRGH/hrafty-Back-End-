@@ -13,13 +13,13 @@ public interface ServiceMapper {
 
     @Mappings({
             @Mapping(source = "seller.id", target = "sellerId"),
-            @Mapping(source = "reviews.id", target = "reviewId"),
+            @Mapping(source = "reviews", target = "reviewsDTOS"),
             @Mapping(source = "panel.id", target = "panelId"),
     })
     ServiceDTO toDTO(Service entity);
     @Mappings({
             @Mapping(source = "sellerId", target = "seller"),
-            @Mapping(source = "reviewId", target = "reviews"),
+            @Mapping(source = "reviewsDTOS", target = "reviews"),
             @Mapping(source = "panelId", target = "panel"),
     })
     Service toEntity(ServiceDTO dto);
