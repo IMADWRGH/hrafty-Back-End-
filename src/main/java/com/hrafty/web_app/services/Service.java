@@ -5,10 +5,21 @@ import com.hrafty.web_app.dto.ServiceDTO;
 import java.util.List;
 
 public interface Service {
-    public ServiceDTO create(ServiceDTO serviceDTO);
-    public List<ServiceDTO> getAllServices();
-    public List<ServiceDTO> getAllServices(Long id);
-    public void updateService(Long id , ServiceDTO serviceDTO);
-    public ServiceDTO changeStatus(Boolean status, Long id);
-    public void  deleteService(Long id);
+     ServiceDTO create(ServiceDTO serviceDTO);
+     List<ServiceDTO> getAllServices();
+    List<ServiceDTO> getAllServices(Long id);
+     void updateService(Long id , ServiceDTO serviceDTO);
+     ServiceDTO changeStatus(Boolean status, Long id);
+     ServiceDTO getService(Long id);
+   void  deleteService(Long id);
+
+    List<ServiceDTO> getAllServices(String name,String type);
+    List<ServiceDTO> getAllServices(String type);
+
+    List<String> getAllTypes();
+
+
+
+
+
 }

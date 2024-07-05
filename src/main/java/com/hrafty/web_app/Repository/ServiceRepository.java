@@ -10,4 +10,9 @@ import java.util.List;
 public interface ServiceRepository extends JpaRepository<Service,Long> {
 
     List<Service> findAllBySellerId(Long id);
+    List<Service> findAllByNameAndType(String name,String type);
+
+    List<Service> findAllByType(String type);
+
+//    List<String> findDistinctType();
 }
