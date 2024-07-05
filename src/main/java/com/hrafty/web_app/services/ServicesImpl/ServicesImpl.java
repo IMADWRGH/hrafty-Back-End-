@@ -6,10 +6,14 @@ import com.hrafty.web_app.dto.ServiceDTO;
 import com.hrafty.web_app.entities.Seller;
 import com.hrafty.web_app.entities.Service;
 import com.hrafty.web_app.exception.InvalidRequest;
+import com.hrafty.web_app.exception.ServiceNotFoundException;
 import com.hrafty.web_app.mapper.ServiceMapper;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 
 @org.springframework.stereotype.Service
@@ -28,7 +32,7 @@ public class ServicesImpl implements com.hrafty.web_app.services.Service {
     @Override
     public ServiceDTO create(ServiceDTO serviceDTO) {
         Seller seller = sellerRepository.findById(serviceDTO.getSellerId())
-                .orElseThrow(() -> new InvalidRequest("Seller not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Seller not found"));
         Service service = serviceMapper.toEntity(serviceDTO);
         service.setSeller(seller);
         Service savedService = serviceRepository.save(service);
@@ -56,6 +60,15 @@ public class ServicesImpl implements com.hrafty.web_app.services.Service {
         }
         return serviceDTOS;
     }
+    @Override
+    public ServiceDTO getService(Long id) {
+        Optional<Service> serviceOptional = serviceRepository.findById(id);
+        if (serviceOptional.isPresent()) {
+            ServiceDTO serviceDTO = serviceMapper.toDTO(serviceOptional.get());
+            return serviceDTO;
+        }
+        throw new ServiceNotFoundException("Service not found for id: ",new Throwable());
+    }
 
     @Override
     public void updateService(Long id, ServiceDTO serviceDTO) {
@@ -81,6 +94,34 @@ public class ServicesImpl implements com.hrafty.web_app.services.Service {
     @Override
     public void deleteService(Long id) {
         serviceRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ServiceDTO> getAllServices(String name, String type) {
+        List<Service> serviceList=serviceRepository.findAllByNameAndType(name, type);
+        List<ServiceDTO> serviceDTOS = new ArrayList<>();
+        for (Service service : serviceList) {
+            serviceDTOS.add(serviceMapper.toDTO(service));
+        }
+        return serviceDTOS;
+    }
+
+    @Override
+    public List<ServiceDTO> getAllServices(String type) {
+        List<Service> serviceList=serviceRepository.findAllByType(type);
+        List<ServiceDTO> serviceDTOS = new ArrayList<>();
+        for (Service service : serviceList) {
+            serviceDTOS.add(serviceMapper.toDTO(service));
+        }
+        return serviceDTOS;
+    }
+
+
+    @Override
+    public List<String> getAllTypes() {
+        System.out.println(serviceRepository.findAllType());
+        return new ArrayList<>(serviceRepository.findAllType());
+
     }
 
 }

@@ -3,20 +3,18 @@ package com.hrafty.web_app.services.ServicesImpl;
 import com.hrafty.web_app.Repository.ProductRepository;
 import com.hrafty.web_app.Repository.SellerRepository;
 import com.hrafty.web_app.dto.ProductDTO;
-import com.hrafty.web_app.dto.ServiceDTO;
-import com.hrafty.web_app.entities.Panel;
 import com.hrafty.web_app.entities.Seller;
-import com.hrafty.web_app.entities.Service;
 import com.hrafty.web_app.exception.InvalidRequest;
 import com.hrafty.web_app.exception.ServiceNotFoundException;
 import com.hrafty.web_app.mapper.ProductMapper;
 import com.hrafty.web_app.services.Product;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ProductImpl implements Product {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;

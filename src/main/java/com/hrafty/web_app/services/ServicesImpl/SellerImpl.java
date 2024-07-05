@@ -19,8 +19,7 @@ public class SellerImpl implements Seller {
     }
 
     public SellerDTO getSeller(Long id) {
-        com.hrafty.web_app.entities.Seller seller = sellerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Seller not found with id " + id));
+        com.hrafty.web_app.entities.Seller seller = sellerRepository.findByUserId(id);
         return sellerMapper.toDTO(seller);
     }
 

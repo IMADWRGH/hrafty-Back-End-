@@ -7,6 +7,8 @@ import com.hrafty.web_app.services.Address;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AddressImpl implements Address {
     private final AddressRepository addressRepository;
@@ -22,5 +24,9 @@ public class AddressImpl implements Address {
         com.hrafty.web_app.entities.Address address = addressRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Address not found with id " + id));
         return addressMapper.toDTO(address);
+    }
+    @Override
+    public List<String> getAllCities() {
+        return addressRepository.findAllDistinctCityNames();
     }
 }

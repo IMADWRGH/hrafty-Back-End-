@@ -41,11 +41,16 @@ public class PanelImpl implements com.hrafty.web_app.services.Panel {
     }
 
     @Override
-    public PanelDTO createPanel(PanelDTO panelDTO) {
-        Panel panel = panelMapper.toEntity(panelDTO);
-        panel = panelRepository.save(panel);
-        return panelMapper.toDTO(panel);
+    public PanelDTO create(PanelDTO panelDTO) {
+        return null;
     }
+
+//    @Override
+//    public PanelDTO createPanel(PanelDTO panelDTO) {
+//        Panel panel = panelMapper.toEntity(panelDTO);
+//        panel = panelRepository.save(panel);
+//        return panelMapper.toDTO(panel);
+//    }
 
     @Override
     public PanelDTO updatePanel(Long id, PanelDTO updatedPanelDTO) {
