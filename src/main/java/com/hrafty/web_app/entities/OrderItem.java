@@ -26,13 +26,6 @@ public class OrderItem {
         this.order = order;
     }
 
-    public OrderItem(Product product, int quantity, double totalPrice, Order order) {
-        this.product = product;
-        this.quantity = quantity;
-        this.totalPrice = totalPrice;
-        this.order = order;
-    }
-
     public Long getId() {
         return id;
     }
@@ -57,12 +50,20 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setPrice(double price) {
-        this.totalPrice = price;
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     @Override
@@ -71,7 +72,8 @@ public class OrderItem {
                 "id=" + id +
                 ", product=" + product +
                 ", quantity=" + quantity +
-                ", price=" + totalPrice +
+                ", totalPrice=" + totalPrice +
+                ", order=" + order +
                 '}';
     }
 }
