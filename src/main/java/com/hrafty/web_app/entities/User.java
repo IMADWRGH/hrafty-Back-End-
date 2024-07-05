@@ -5,26 +5,28 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.security.auth.Subject;
-import java.security.Principal;
 import java.util.Collection;
 
 @Entity
 @Table(name = "user")
 @ToString
 @EqualsAndHashCode(callSuper = false)
-public class User extends Auditable  implements UserDetails , Principal {
+public class User extends Auditable implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "full_name",nullable = false)
+
+    @Column(name = "full_name", nullable = false)
     private String fullName;
-    @Column(name = "email",nullable = false,unique = true)
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
-   @Column(name = "password",nullable = false,unique = true)
+
+    @Column(name = "password", nullable = false)
     private String password;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "role",updatable = false)
+    @Column(name = "role", updatable = false)
     private Role role;
 
     public User() {}
@@ -37,16 +39,13 @@ public class User extends Auditable  implements UserDetails , Principal {
         this.role = role;
     }
 
-    /////Relations///////
-
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Seller seller;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Customer customer;
 
-///////////////Getter & Setter/////////////////
-
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -88,22 +87,22 @@ public class User extends Auditable  implements UserDetails , Principal {
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 
     public void setPassword(String password) {
@@ -118,7 +117,7 @@ public class User extends Auditable  implements UserDetails , Principal {
         this.role = role;
     }
 
-   public Seller getSeller() {
+    public Seller getSeller() {
         return seller;
     }
 
@@ -132,10 +131,5 @@ public class User extends Auditable  implements UserDetails , Principal {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    @Override
-    public String getName() {
-        return email;
     }
 }

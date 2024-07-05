@@ -1,6 +1,7 @@
 package com.hrafty.web_app.dto;
 
 
+import java.util.List;
 
 public class ServiceDTO {
     private Long id;
@@ -11,10 +12,9 @@ public class ServiceDTO {
     private String type;
     private boolean status;
     private Long sellerId;
-    private Long reviewId;
+    private List<ReviewsDTO> reviewsDTOS;
     private Long panelId;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -79,12 +79,12 @@ public class ServiceDTO {
         this.sellerId = sellerId;
     }
 
-    public Long getReviewId() {
-        return reviewId;
+    public List<ReviewsDTO> getReviewsDTOS() {
+        return reviewsDTOS;
     }
 
-    public void setReviewId(Long reviewId) {
-        this.reviewId = reviewId;
+    public void setReviewsDTOS(List<ReviewsDTO> reviewsDTOS) {
+        this.reviewsDTOS = reviewsDTOS;
     }
 
     public Long getPanelId() {

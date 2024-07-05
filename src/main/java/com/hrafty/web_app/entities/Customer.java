@@ -2,14 +2,12 @@ package com.hrafty.web_app.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
-@AllArgsConstructor
-
 @EqualsAndHashCode(callSuper = true)
 public class Customer extends Auditable{
     @Id
@@ -29,15 +27,25 @@ public class Customer extends Auditable{
     @OneToOne(mappedBy = "customer")
     private Panel panel;
 
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Reviews> reviews;
+
     public Customer() {
 
     }
-    public Customer(Long id, String image, String sexe, String phone, User user) {
+
+    public Customer(Long id, String image, String sexe, String phone, User user, Panel panel, List<Order> orders, List<Reviews> reviews) {
         this.id = id;
         this.image = image;
         this.sexe = sexe;
         this.phone = phone;
         this.user = user;
+        this.panel = panel;
+        this.orders = orders;
+        this.reviews = reviews;
     }
 
     public Long getId() {
@@ -72,6 +80,30 @@ public class Customer extends Auditable{
         this.phone = phone;
     }
 
+    public Panel getPanel() {
+        return panel;
+    }
+
+    public void setPanel(Panel panel) {
+        this.panel = panel;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Reviews> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Reviews> reviews) {
+        this.reviews = reviews;
+    }
+
     @JsonIgnore
     public User getUser() {
         return user;
@@ -81,11 +113,17 @@ public class Customer extends Auditable{
         this.user = user;
     }
 
-    public Panel getPanel() {
-        return panel;
-    }
-
-    public void setPanel(Panel panel) {
-        this.panel = panel;
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", image='" + image + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", phone='" + phone + '\'' +
+                ", user=" + user +
+                ", panel=" + panel +
+                ", orders=" + orders +
+                ", reviews=" + reviews +
+                '}';
     }
 }

@@ -2,6 +2,7 @@ package com.hrafty.web_app.dto;
 
 public class ProductDTO {
     private Long id;
+    private String image;
     private String name;
     private String description;
     private double price;
@@ -50,18 +51,28 @@ public class ProductDTO {
         this.sellerId = sellerId;
     }
 
-    public ProductDTO(Long id, String name, String description, double price, Long sellerId) {
+    public ProductDTO(Long id, String image, String name, String description, double price, Long sellerId) {
         this.id = id;
+        this.image = image;
         this.name = name;
         this.description = description;
         this.price = price;
         this.sellerId = sellerId;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "ProductDTO{" +
                 "id=" + id +
+                ", image='" + image + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +

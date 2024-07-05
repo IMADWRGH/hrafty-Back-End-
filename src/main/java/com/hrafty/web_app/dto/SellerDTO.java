@@ -1,7 +1,7 @@
 package com.hrafty.web_app.dto;
 
 
-import com.hrafty.web_app.entities.User;
+
 
 
 

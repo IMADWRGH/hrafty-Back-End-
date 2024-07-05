@@ -10,11 +10,8 @@ public class Reviews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "comment")
-    private String comments;
-    @Column(name = "rating")
     private byte rating;
-
+    private String comment;
 
     ////Relations////////
 
@@ -22,9 +19,13 @@ public class Reviews {
     @JoinColumn( name = "customer_id")
     private Customer customer;
 
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "service_id")
+    private Service service;
 
-    @OneToMany(mappedBy = "reviews")
-    private List<Service> service;
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     ///////////////
 
@@ -32,12 +33,13 @@ public class Reviews {
     public Reviews() {
     }
 
-    public Reviews(Long id, String comments, byte rating, Customer customer, List<Service> service) {
+    public Reviews(Long id, byte rating, String comment, Customer customer, Service service, Product product) {
         this.id = id;
-        this.comments = comments;
         this.rating = rating;
+        this.comment = comment;
         this.customer = customer;
         this.service = service;
+        this.product = product;
     }
 
     public Long getId() {
@@ -48,20 +50,20 @@ public class Reviews {
         this.id = id;
     }
 
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
     public byte getRating() {
         return rating;
     }
 
     public void setRating(byte rating) {
         this.rating = rating;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Customer getCustomer() {
@@ -72,11 +74,31 @@ public class Reviews {
         this.customer = customer;
     }
 
-    public List<Service> getService() {
+    public Service getService() {
         return service;
     }
 
-    public void setService(List<Service> service) {
+    public void setService(Service service) {
         this.service = service;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    @Override
+    public String toString() {
+        return "Reviews{" +
+                "id=" + id +
+                ", rating=" + rating +
+                ", comment='" + comment + '\'' +
+                ", customer=" + customer +
+                ", service=" + service +
+                ", product=" + product +
+                '}';
     }
 }

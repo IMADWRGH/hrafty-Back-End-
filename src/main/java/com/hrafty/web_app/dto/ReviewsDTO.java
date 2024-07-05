@@ -7,17 +7,17 @@ public class ReviewsDTO {
     private String comments;
     private byte rating;
     private CustomerDTO customer;
-    private List<ServiceDTO> service;
+    private List<ServiceDTO> services;
 
     public ReviewsDTO() {
     }
 
-    public ReviewsDTO(Long id, String comments, byte rating, CustomerDTO customer, List<ServiceDTO> service) {
+    public ReviewsDTO(Long id, String comments, byte rating, CustomerDTO customer, List<ServiceDTO> services) {
         this.id = id;
         this.comments = comments;
         this.rating = rating;
         this.customer = customer;
-        this.service = service;
+        this.services = services;
     }
 
     public Long getId() {
@@ -52,12 +52,12 @@ public class ReviewsDTO {
         this.customer = customer;
     }
 
-    public List<ServiceDTO> getService() {
-        return service;
+    public List<ServiceDTO> getServices() {
+        return services;
     }
 
-    public void setService(List<ServiceDTO> service) {
-        this.service = service;
+    public void setServices(List<ServiceDTO> service) {
+        this.services = service;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ReviewsDTO {
                 ", comments='" + comments + '\'' +
                 ", rating=" + rating +
                 ", customer=" + customer +
-                ", service=" + service +
+                ", service=" + services +
                 '}';
     }
 }

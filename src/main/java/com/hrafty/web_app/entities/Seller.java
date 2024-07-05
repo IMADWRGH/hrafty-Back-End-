@@ -1,15 +1,13 @@
 package com.hrafty.web_app.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 @Entity
 @Table(name = "seller")
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Seller extends Auditable{
     @Id
@@ -18,7 +16,7 @@ public class Seller extends Auditable{
     @Column(name="number_id",unique = true,updatable = false,nullable = false)
     private Long nb_license;
     private String image;
-    @Column(name = "sexe",length = 4,nullable = false,columnDefinition = "VARCHAR(4) ")
+    @Column(name = "sexe",length =4,nullable = false,columnDefinition = "VARCHAR(4) ")
     private String sexe;
     @Column(name = "nbr_phone",length = 12,nullable = false,columnDefinition = "VARCHAR(12) ")
     private String phone;
@@ -34,6 +32,9 @@ public class Seller extends Auditable{
     @OneToMany(mappedBy = "seller")
     private List<Service> services;
 
+    @OneToMany(mappedBy = "seller")
+    private List<Product> products;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
@@ -42,13 +43,17 @@ public class Seller extends Auditable{
     public Seller() {
 
     }
-
-    public Long getNb_license() {
-        return nb_license;
-    }
-
-    public void setNb_license(Long nb_license) {
+    public Seller(Long id, Long nb_license, String image, String sexe, String phone, String site, User user, List<Service> services, List<Product> products, Address address) {
+        this.id = id;
         this.nb_license = nb_license;
+        this.image = image;
+        this.sexe = sexe;
+        this.phone = phone;
+        this.site = site;
+        this.user = user;
+        this.services = services;
+        this.products = products;
+        this.address = address;
     }
 
     public Long getId() {
@@ -57,6 +62,14 @@ public class Seller extends Auditable{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getNb_license() {
+        return nb_license;
+    }
+
+    public void setNb_license(Long nb_license) {
+        this.nb_license = nb_license;
     }
 
     public String getImage() {
@@ -91,7 +104,6 @@ public class Seller extends Auditable{
         this.site = site;
     }
 
-    @JsonIgnore
     public User getUser() {
         return user;
     }
@@ -108,6 +120,13 @@ public class Seller extends Auditable{
         this.services = services;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
     public Address getAddress() {
         return address;
@@ -115,5 +134,21 @@ public class Seller extends Auditable{
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Seller{" +
+                "id=" + id +
+                ", nb_license=" + nb_license +
+                ", image='" + image + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", phone='" + phone + '\'' +
+                ", site='" + site + '\'' +
+                ", user=" + user +
+                ", services=" + services +
+                ", products=" + products +
+                ", address=" + address +
+                '}';
     }
 }

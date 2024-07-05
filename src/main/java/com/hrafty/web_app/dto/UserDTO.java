@@ -1,5 +1,6 @@
 package com.hrafty.web_app.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hrafty.web_app.entities.Role;
 
 
@@ -8,7 +9,7 @@ public class UserDTO {
     private String fullName;
     private String email;
     private String password;
-   private Role role;
+    private Role role;
 
 
     public UserDTO(Long id, String fullName, String email, String password, Role role) {

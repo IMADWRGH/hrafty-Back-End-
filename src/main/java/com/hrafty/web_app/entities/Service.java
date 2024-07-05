@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.List;
+
 @Entity
 @Table(name = "service")
 @DynamicInsert
@@ -11,7 +13,8 @@ import org.hibernate.annotations.DynamicUpdate;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    private Long id;
+
     private String name;
     private String description;
     private String image;
@@ -19,22 +22,19 @@ public class Service {
     private String type;
     private boolean status;
 
-    ////////Relations//////////
-
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    private List<Reviews> reviews;
+
     @ManyToOne
-    @JoinColumn(name = "review_id")
-    private  Reviews reviews;
-////////////////////////////////////
+    private Panel panel;
 
+    public Service() {}
 
-    public Service() {
-    }
-
-    public Service(Long id, String name, String description, String image, double price, String type, boolean status, Seller seller, Reviews reviews, Panel panel) {
+    public Service(Long id, String name, String description, String image, double price, String type, boolean status, Seller seller, List<Reviews> reviews, Panel panel) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -45,12 +45,7 @@ public class Service {
         this.seller = seller;
         this.reviews = reviews;
         this.panel = panel;
-
     }
-
-    @ManyToOne
-    private Panel panel;
-
 
     public Long getId() {
         return id;
@@ -116,11 +111,11 @@ public class Service {
         this.seller = seller;
     }
 
-    public Reviews getReviews() {
+    public List<Reviews> getReviews() {
         return reviews;
     }
 
-    public void setReviews(Reviews reviews) {
+    public void setReviews(List<Reviews> reviews) {
         this.reviews = reviews;
     }
 
@@ -132,4 +127,19 @@ public class Service {
         this.panel = panel;
     }
 
+    @Override
+    public String toString() {
+        return "Service{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", price=" + price +
+                ", type='" + type + '\'' +
+                ", status=" + status +
+                ", seller=" + seller +
+                ", reviews=" + reviews +
+                ", panel=" + panel +
+                '}';
+    }
 }
