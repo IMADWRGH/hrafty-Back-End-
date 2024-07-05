@@ -1,8 +1,6 @@
 package com.hrafty.web_app.controller;
 
 import com.hrafty.web_app.dto.ProductDTO;
-import com.hrafty.web_app.dto.SellerDTO;
-import com.hrafty.web_app.dto.ServiceDTO;
 import com.hrafty.web_app.services.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequestMapping(path = "api/v1/product")
-@CrossOrigin(origins = "http://localhost:4200")
+@RestController
 public class ProductController {
     private final Product product;
 
@@ -49,6 +47,6 @@ public class ProductController {
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id){
         product.deleteProduct(id);
-        return new ResponseEntity<>("Serive successfully deleted (: ",HttpStatus.OK);
+        return new ResponseEntity<>("Product successfully deleted",HttpStatus.OK);
     }
 }
