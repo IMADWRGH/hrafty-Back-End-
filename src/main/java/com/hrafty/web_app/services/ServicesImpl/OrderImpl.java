@@ -12,9 +12,11 @@ import com.hrafty.web_app.mapper.OrderMapper;
 import com.hrafty.web_app.services.Order;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderImpl implements Order {
@@ -31,25 +33,24 @@ public class OrderImpl implements Order {
     }
 
     @Override
+    @Transactional
     public OrderDTO create(Long customerId, List<OrderItemDTO> orderItemsDTO) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
-
         List<OrderItem> orderItems = new ArrayList<>();
+        com.hrafty.web_app.entities.Order order = new com.hrafty.web_app.entities.Order();
         double totalPrice = 0;
-
         for (OrderItemDTO dto : orderItemsDTO) {
             Product product = productRepository.findById(dto.getProductId())
                     .orElseThrow(() -> new EntityNotFoundException("Product not found"));
             OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
             orderItem.setProduct(product);
             orderItem.setQuantity(dto.getQuantity());
             orderItem.setTotalPrice(product.getPrice() * dto.getQuantity());
             totalPrice += orderItem.getTotalPrice();
             orderItems.add(orderItem);
         }
-
-        com.hrafty.web_app.entities.Order order = new com.hrafty.web_app.entities.Order();
         order.setCustomer(customer);
         order.setOrderItems(orderItems);
         order.setTotalPrice(totalPrice);
@@ -60,19 +61,22 @@ public class OrderImpl implements Order {
 
     @Override
     public List<OrderDTO> getAllOrders() {
-//        List<com.hrafty.web_app.entities.Order> orders = orderRepository.findAll();
-//        return orderMapper.toDTO(orders);
-        return null;
+        List<com.hrafty.web_app.entities.Order> orders = orderRepository.findAll();
+        List<OrderDTO> orderDTOList=new ArrayList<>();
+        for (com.hrafty.web_app.entities.Order order : orders) {
+            OrderDTO orderDTO = orderMapper.toDTO(order);
+            orderDTOList.add(orderDTO);
+        }
+        return orderDTOList;
     }
 
     @Override
     public List<OrderDTO> getAllOrders(Long customerId) {
-//        Customer customer = customerRepository.findById(customerId)
-//                .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
-//
-//        List<com.hrafty.web_app.entities.Order> orders = orderRepository.findByCustomer(customer);
-//        return orderMapper.toDTO(orders);
-        return null;
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+        return orderRepository.findByCustomer(customer).stream()
+                .map(orderMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

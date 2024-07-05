@@ -7,7 +7,10 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class, OrderItemMapper.class})
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = "spring", uses = {CustomerMapper.class, OrderItemMapper.class})
 public interface OrderMapper {
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
@@ -38,4 +41,13 @@ public interface OrderMapper {
             @Mapping(source = "orderItems", target = "orderItems")
     })
     Order toEntity(OrderDTO dto);
+
+    default List<OrderDTO> toDTOs(List<Order> orders) {
+        if (orders == null) {
+            return null;
+        }
+        return orders.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
 }

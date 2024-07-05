@@ -19,15 +19,28 @@ public class OrderController {
         this.order = order;
     }
 
-    @PostMapping("/add/{customerId}")
-    public ResponseEntity<OrderDTO> createOrder(@PathVariable Long customerId, @RequestBody List<OrderItemDTO> orderItemsDTO) {
+    @PostMapping("/add/{id}")
+    public ResponseEntity<OrderDTO> createOrder(@PathVariable Long id, @RequestBody List<OrderItemDTO> orderItemsDTO) {
         try {
-            OrderDTO createdOrder = order.create(customerId, orderItemsDTO);
+            OrderDTO createdOrder = order.create(id, orderItemsDTO);
             return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(path = "/getAllOrders")
+    ResponseEntity<List<OrderDTO>> getAllOrders(){
+        List<OrderDTO> orderDTOList=order.getAllOrders();
+        return ResponseEntity.status(HttpStatus.OK).body(orderDTOList);
+    }
+
+    @GetMapping(path = "/getAllOrders/{id}")
+    ResponseEntity<List<OrderDTO>> getAllOrders(@PathVariable Long id){
+        List<OrderDTO> orderDTOList=order.getAllOrders(id);
+        return ResponseEntity.status(HttpStatus.OK).body(orderDTOList);
+    }
+
 
 
 }
