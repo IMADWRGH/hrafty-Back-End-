@@ -29,4 +29,8 @@ public class ExceptionsHandler {
     public ResponseEntity<String> Exception(PanelNotFoundException msg){
         return new ResponseEntity<>(msg.getMessage(), HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(ServiceNotFoundException.class)
+    public ResponseEntity<String> Exception(ServiceNotFoundException msg){
+        return new ResponseEntity<>(msg.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }
