@@ -1,14 +1,21 @@
 package com.hrafty.web_app.Auth;
 
 
-
+import com.hrafty.web_app.dto.UserDTO;
 
 
 public class AuthenticationResponse {
     private String token;
-    private Auth auth;
+    private UserDTO user;
 
-    public AuthenticationResponse() {}
+
+    public AuthenticationResponse() {
+    }
+
+    public AuthenticationResponse(String token, UserDTO user) {
+        this.token = token;
+        this.user = new UserDTO(user.getId(), user.getFullName(), user.getEmail(), null, user.getRole());
+    }
 
     public String getToken() {
         return token;
@@ -18,11 +25,11 @@ public class AuthenticationResponse {
         this.token = token;
     }
 
-    public Auth getAuth() {
-        return auth;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setAuth(Auth auth) {
-        this.auth = auth;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 }

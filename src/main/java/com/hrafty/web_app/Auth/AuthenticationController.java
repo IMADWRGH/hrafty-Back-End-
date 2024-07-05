@@ -18,12 +18,12 @@ public class AuthenticationController {
 
 
     @PostMapping(path = "/register-seller")
-    public ResponseEntity<Object> registerSeller(@RequestBody AuthDTO authDTO) throws Exception {
+    public ResponseEntity<Object> registerSeller(@RequestBody Auth authDTO) throws Exception {
         Object obj =authService.registerSeller(authDTO.getUser(),authDTO.getSeller());
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
     @PostMapping(path = "/register-customer")
-    public ResponseEntity<Object> registerCustomer(@RequestBody AuthDTO responseDTO) throws Exception {
+    public ResponseEntity<Object> registerCustomer(@RequestBody Auth responseDTO) throws Exception {
         Object obj =authService.registerCustomer(responseDTO.getUser(),responseDTO.getCustomer());
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
