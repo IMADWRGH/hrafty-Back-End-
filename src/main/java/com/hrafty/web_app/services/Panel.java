@@ -10,7 +10,7 @@ import java.util.List;
 public interface Panel {
     public List<PanelDTO> getAllPanels();
     public PanelDTO getPanelById(Long id);
-    public PanelDTO createPanel(PanelDTO panelDTO);
+    public PanelDTO create(PanelDTO panelDTO);
     public PanelDTO updatePanel(Long id, PanelDTO updatedPanelDTO);
     public void deletePanel(Long id);
     public CustomerDTO getCustomerByPanelId(Long panelId);
