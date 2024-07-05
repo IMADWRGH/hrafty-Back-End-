@@ -10,7 +10,7 @@ public class OrderItem {
     @ManyToOne
     private Product product;
     private int quantity;
-    private double price;
+    private double totalPrice;
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
@@ -18,11 +18,19 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(Long id, Product product, int quantity, double price) {
+    public OrderItem(Long id, Product product, int quantity, double totalPrice, Order order) {
         this.id = id;
         this.product = product;
         this.quantity = quantity;
-        this.price = price;
+        this.totalPrice = totalPrice;
+        this.order = order;
+    }
+
+    public OrderItem(Product product, int quantity, double totalPrice, Order order) {
+        this.product = product;
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+        this.order = order;
     }
 
     public Long getId() {
@@ -50,11 +58,11 @@ public class OrderItem {
     }
 
     public double getPrice() {
-        return price;
+        return totalPrice;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.totalPrice = price;
     }
 
     @Override
@@ -63,7 +71,7 @@ public class OrderItem {
                 "id=" + id +
                 ", product=" + product +
                 ", quantity=" + quantity +
-                ", price=" + price +
+                ", price=" + totalPrice +
                 '}';
     }
 }
