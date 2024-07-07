@@ -14,7 +14,7 @@ public class AuthenticationResponse {
 
     public AuthenticationResponse(String token, UserDTO user) {
         this.token = token;
-        this.user = new UserDTO(user.getId(), user.getFullName(), user.getEmail(), null, user.getRole());
+        this.user = new UserDTO(user.getId(), user.getFullName(), user.getEmail(),null, user.getRole());
     }
 
     public String getToken() {
@@ -30,6 +30,6 @@ public class AuthenticationResponse {
     }
 
     public void setUser(UserDTO user) {
-        this.user = user;
+        this.user = new UserDTO(user.getId(), user.getFullName(), user.getEmail(), null,user.getRole());
     }
 }

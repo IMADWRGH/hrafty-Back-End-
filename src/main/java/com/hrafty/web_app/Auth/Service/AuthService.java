@@ -96,12 +96,8 @@ public class AuthService {
             throw new InvalidPasswordException("Invalid email or password");
         }
         String token = jwtService.generateToken(user);
-        UserDTO userDTO=userMapper.toDTO(user);
-        AuthenticationResponse response = new AuthenticationResponse();
-        response.setToken(token);
-        response.setUser(userDTO);
-
-        return response;
+        UserDTO userDTO = new UserDTO(user.getId(), user.getFullName(), user.getEmail(),null, user.getRole());
+        return new AuthenticationResponse(token, userDTO);
     }
 
 
