@@ -1,17 +1,15 @@
 package com.hrafty.web_app.controller;
 
-import com.hrafty.web_app.dto.PanelDTO;
-import com.hrafty.web_app.services.Panel;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
+import com.hrafty.web_app.services.PanelService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/v1/customer")
 public class CustomerController {
-    private final Panel panel;
+    private final PanelService panel;
 
-    public CustomerController(Panel panel) {
+    public CustomerController(PanelService panel) {
         this.panel = panel;
     }
 

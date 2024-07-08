@@ -1,7 +1,7 @@
 package com.hrafty.web_app.controller;
 
 import com.hrafty.web_app.dto.ProductDTO;
-import com.hrafty.web_app.services.Product;
+import com.hrafty.web_app.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +11,9 @@ import java.util.List;
 @RequestMapping(path = "api/v1/product")
 @RestController
 public class ProductController {
-    private final Product product;
+    private final ProductService product;
 
-    public ProductController(Product product) {
+    public ProductController(ProductService product) {
         this.product = product;
     }
 

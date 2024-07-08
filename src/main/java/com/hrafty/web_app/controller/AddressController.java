@@ -1,8 +1,7 @@
 package com.hrafty.web_app.controller;
 
 import com.hrafty.web_app.dto.AddressDTO;
-import com.hrafty.web_app.dto.SellerDTO;
-import com.hrafty.web_app.services.Address;
+import com.hrafty.web_app.services.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +15,9 @@ import java.util.List;
 @RequestMapping(path = "api/v1/address")
 public class AddressController {
 
-    private  final Address address;
+    private  final AddressService address;
 
-    public AddressController(Address address) {
+    public AddressController(AddressService address) {
         this.address = address;
     }
 

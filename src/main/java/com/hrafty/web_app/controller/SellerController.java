@@ -2,8 +2,8 @@ package com.hrafty.web_app.controller;
 
 import com.hrafty.web_app.dto.SellerDTO;
 import com.hrafty.web_app.dto.ServiceDTO;
-import com.hrafty.web_app.services.Seller;
-import com.hrafty.web_app.services.Service;
+import com.hrafty.web_app.services.SellerService;
+import com.hrafty.web_app.services.ServiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/v1/seller")
 public class SellerController {
-    private  final Service service;
-    private final Seller seller;
-    public SellerController(Service service, Seller seller) {
+    private  final ServiceService service;
+    private final SellerService seller;
+    public SellerController(ServiceService service, SellerService seller) {
         this.service = service;
         this.seller = seller;
     }

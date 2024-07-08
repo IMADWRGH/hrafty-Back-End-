@@ -3,7 +3,7 @@ package com.hrafty.web_app.controller;
 
 import com.hrafty.web_app.dto.OrderDTO;
 import com.hrafty.web_app.dto.OrderItemDTO;
-import com.hrafty.web_app.services.Order;
+import com.hrafty.web_app.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/v1/order")
 public class OrderController {
-    private final Order order;
+    private final OrderService order;
 
-    public OrderController(Order order) {
+    public OrderController(OrderService order) {
         this.order = order;
     }
 
