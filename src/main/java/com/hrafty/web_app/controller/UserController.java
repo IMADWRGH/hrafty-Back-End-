@@ -19,18 +19,18 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping(path ="/getAll")
+    @GetMapping(path ="/products")
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<ProductDTO> products = product.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/ServicesCategories")
+    @GetMapping(path = "/service-categories")
     public ResponseEntity<List<String>> getAllType(){
         return ResponseEntity.status(HttpStatus.OK).body(service.getAllTypes());
     }
 
-    @GetMapping(path = "/ProductsCategories")
+    @GetMapping(path = "/product-categories")
     public ResponseEntity<List<String>> getAllTypes(){
         return ResponseEntity.status(HttpStatus.OK).body(product.getAllCategories());
     }
