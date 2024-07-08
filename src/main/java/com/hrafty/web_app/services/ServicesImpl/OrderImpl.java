@@ -9,7 +9,7 @@ import com.hrafty.web_app.entities.Customer;
 import com.hrafty.web_app.entities.OrderItem;
 import com.hrafty.web_app.entities.Product;
 import com.hrafty.web_app.mapper.OrderMapper;
-import com.hrafty.web_app.services.Order;
+import com.hrafty.web_app.services.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderImpl implements Order {
+public class OrderImpl implements OrderService {
     private final CustomerRepository customerRepository;
     private final OrderMapper orderMapper;
     private final OrderRepository orderRepository;
@@ -41,13 +41,13 @@ public class OrderImpl implements Order {
         com.hrafty.web_app.entities.Order order = new com.hrafty.web_app.entities.Order();
         double totalPrice = 0;
         for (OrderItemDTO dto : orderItemsDTO) {
-            Product product = productRepository.findById(dto.getProductId())
+            Product product = productRepository.findById(dto.productId())
                     .orElseThrow(() -> new EntityNotFoundException("Product not found"));
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
             orderItem.setProduct(product);
-            orderItem.setQuantity(dto.getQuantity());
-            orderItem.setTotalPrice(product.getPrice() * dto.getQuantity());
+            orderItem.setQuantity(dto.quantity());
+            orderItem.setTotalPrice(product.getPrice() * dto.quantity());
             totalPrice += orderItem.getTotalPrice();
             orderItems.add(orderItem);
         }
@@ -87,13 +87,13 @@ public class OrderImpl implements Order {
         List<OrderItem> orderItems = new ArrayList<>();
         double totalPrice = 0;
 
-        for (OrderItemDTO dto : orderDTO.getOrderItems()) {
-            Product product = productRepository.findById(dto.getProductId())
+        for (OrderItemDTO dto : orderDTO.orderItems()) {
+            Product product = productRepository.findById(dto.productId())
                     .orElseThrow(() -> new EntityNotFoundException("Product not found"));
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
-            orderItem.setQuantity(dto.getQuantity());
-            orderItem.setTotalPrice(product.getPrice() * dto.getQuantity());
+            orderItem.setQuantity(dto.quantity());
+            orderItem.setTotalPrice(product.getPrice() * dto.quantity());
             totalPrice += orderItem.getTotalPrice();
             orderItems.add(orderItem);
         }

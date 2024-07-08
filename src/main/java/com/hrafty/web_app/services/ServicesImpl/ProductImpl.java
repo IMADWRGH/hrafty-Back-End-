@@ -3,11 +3,12 @@ package com.hrafty.web_app.services.ServicesImpl;
 import com.hrafty.web_app.Repository.ProductRepository;
 import com.hrafty.web_app.Repository.SellerRepository;
 import com.hrafty.web_app.dto.ProductDTO;
+import com.hrafty.web_app.entities.Product;
 import com.hrafty.web_app.entities.Seller;
 import com.hrafty.web_app.exception.InvalidRequest;
 import com.hrafty.web_app.exception.ServiceNotFoundException;
 import com.hrafty.web_app.mapper.ProductMapper;
-import com.hrafty.web_app.services.Product;
+import com.hrafty.web_app.services.ProductService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class ProductImpl implements Product {
+public class ProductImpl implements ProductService {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
     private final SellerRepository sellerRepository;
@@ -28,7 +29,7 @@ public class ProductImpl implements Product {
 
     @Override
     public ProductDTO create(ProductDTO productDTO) {
-        Seller seller = sellerRepository.findById(productDTO.getSellerId())
+        Seller seller = sellerRepository.findById(productDTO.sellerId())
                 .orElseThrow(() -> new EntityNotFoundException("Seller not found"));
         com.hrafty.web_app.entities.Product product =productMapper.toEntity(productDTO);
         product.setSeller(seller);
@@ -38,9 +39,9 @@ public class ProductImpl implements Product {
 
     @Override
     public List<ProductDTO> getAllProducts() {
-        List<com.hrafty.web_app.entities.Product> products =productRepository.findAll();
+        List<Product> products =productRepository.findAll();
         List<ProductDTO> productDTOList=new ArrayList<>();
-        for(com.hrafty.web_app.entities.Product product:products){
+        for(Product product:products){
                 productDTOList.add(productMapper.toDTO(product));
         }
         return productDTOList;
@@ -48,12 +49,17 @@ public class ProductImpl implements Product {
 
     @Override
     public List<ProductDTO> getAllProducts(Long id) {
-        List<com.hrafty.web_app.entities.Product> products =productRepository.findAllBySellerId(id);
+        List<Product> products =productRepository.findAllBySellerId(id);
         List<ProductDTO> productDTOList=new ArrayList<>();
-        for(com.hrafty.web_app.entities.Product product:products){
+        for(Product product:products){
             productDTOList.add(productMapper.toDTO(product));
         }
         return productDTOList;
+    }
+
+    @Override
+    public List<String> getAllCategories() {
+        return productRepository.findAllCategories();
     }
 
     @Override

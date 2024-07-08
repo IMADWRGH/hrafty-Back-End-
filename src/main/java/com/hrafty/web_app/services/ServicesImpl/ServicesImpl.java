@@ -8,6 +8,7 @@ import com.hrafty.web_app.entities.Service;
 import com.hrafty.web_app.exception.InvalidRequest;
 import com.hrafty.web_app.exception.ServiceNotFoundException;
 import com.hrafty.web_app.mapper.ServiceMapper;
+import com.hrafty.web_app.services.ServiceService;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 
 @org.springframework.stereotype.Service
-public class ServicesImpl implements com.hrafty.web_app.services.Service {
+public class ServicesImpl implements ServiceService {
     private final ServiceMapper serviceMapper;
     private final ServiceRepository serviceRepository;
 
@@ -31,7 +32,7 @@ public class ServicesImpl implements com.hrafty.web_app.services.Service {
 
     @Override
     public ServiceDTO create(ServiceDTO serviceDTO) {
-        Seller seller = sellerRepository.findById(serviceDTO.getSellerId())
+        Seller seller = sellerRepository.findById(serviceDTO.sellerId())
                 .orElseThrow(() -> new EntityNotFoundException("Seller not found"));
         Service service = serviceMapper.toEntity(serviceDTO);
         service.setSeller(seller);
@@ -97,8 +98,8 @@ public class ServicesImpl implements com.hrafty.web_app.services.Service {
     }
 
     @Override
-    public List<ServiceDTO> getAllServices(String name, String type) {
-        List<Service> serviceList=serviceRepository.findAllByNameAndType(name, type);
+    public List<ServiceDTO> getAllServices(String name, String category) {
+        List<Service> serviceList=serviceRepository.findAllByNameAndCategory(name, category);
         List<ServiceDTO> serviceDTOS = new ArrayList<>();
         for (Service service : serviceList) {
             serviceDTOS.add(serviceMapper.toDTO(service));
@@ -107,8 +108,8 @@ public class ServicesImpl implements com.hrafty.web_app.services.Service {
     }
 
     @Override
-    public List<ServiceDTO> getAllServices(String type) {
-        List<Service> serviceList=serviceRepository.findAllByType(type);
+    public List<ServiceDTO> getAllServices(String category) {
+        List<Service> serviceList=serviceRepository.findAllByCategory(category);
         List<ServiceDTO> serviceDTOS = new ArrayList<>();
         for (Service service : serviceList) {
             serviceDTOS.add(serviceMapper.toDTO(service));
@@ -119,8 +120,7 @@ public class ServicesImpl implements com.hrafty.web_app.services.Service {
 
     @Override
     public List<String> getAllTypes() {
-        System.out.println(serviceRepository.findAllType());
-        return new ArrayList<>(serviceRepository.findAllType());
+        return new ArrayList<>(serviceRepository.findAllCategories());
 
     }
 

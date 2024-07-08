@@ -3,13 +3,13 @@ package com.hrafty.web_app.services.ServicesImpl;
 import com.hrafty.web_app.Repository.SellerRepository;
 import com.hrafty.web_app.dto.SellerDTO;
 import com.hrafty.web_app.mapper.SellerMapper;
-import com.hrafty.web_app.services.Seller;
+import com.hrafty.web_app.services.SellerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class SellerImpl implements Seller {
+public class SellerImpl implements SellerService {
     private final SellerMapper sellerMapper;
     private final SellerRepository sellerRepository;
 

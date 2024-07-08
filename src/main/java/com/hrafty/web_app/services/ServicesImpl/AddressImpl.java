@@ -3,14 +3,14 @@ package com.hrafty.web_app.services.ServicesImpl;
 import com.hrafty.web_app.Repository.AddressRepository;
 import com.hrafty.web_app.dto.AddressDTO;
 import com.hrafty.web_app.mapper.AddressMapper;
-import com.hrafty.web_app.services.Address;
+import com.hrafty.web_app.services.AddressService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class AddressImpl implements Address {
+public class AddressImpl implements AddressService {
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
 

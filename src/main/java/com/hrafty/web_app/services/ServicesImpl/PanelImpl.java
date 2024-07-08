@@ -6,6 +6,7 @@ import com.hrafty.web_app.dto.PanelDTO;
 import com.hrafty.web_app.entities.Panel;
 import com.hrafty.web_app.exception.PanelNotFoundException;
 import com.hrafty.web_app.mapper.PanelMapper;
+import com.hrafty.web_app.services.PanelService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PanelImpl implements com.hrafty.web_app.services.Panel {
+public class PanelImpl implements PanelService {
     private final PanelRepository panelRepository;
     private final PanelMapper panelMapper;
 
@@ -77,7 +78,7 @@ public class PanelImpl implements com.hrafty.web_app.services.Panel {
                 .orElseThrow(() -> new PanelNotFoundException("Panel not found"));
         PanelDTO panelDTO=panelMapper.toDTO(panel);
         if(panelDTO != null) {
-            return panelDTO.getCustomer();
+            return panelDTO.customer();
         }
         return null;
     }
