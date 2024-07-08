@@ -13,6 +13,7 @@ public class Product {
     private String name;
     private String description;
     private double price;
+    private String category;
     @ManyToOne
     private Seller seller;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
@@ -21,14 +22,23 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String image, String name, String description, double price, Seller seller, List<Reviews> reviews) {
+    public Product(Long id, String image, String name, String description, double price, String category, Seller seller, List<Reviews> reviews) {
         this.id = id;
         this.image = image;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.category = category;
         this.seller = seller;
         this.reviews = reviews;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getImage() {
