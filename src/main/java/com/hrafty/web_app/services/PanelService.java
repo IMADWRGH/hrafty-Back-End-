@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
-public interface Panel {
+public interface PanelService {
     public List<PanelDTO> getAllPanels();
     public PanelDTO getPanelById(Long id);
     public PanelDTO create(PanelDTO panelDTO);

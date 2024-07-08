@@ -4,7 +4,7 @@ import com.hrafty.web_app.dto.AddressDTO;
 
 import java.util.List;
 
-public interface Address {
+public interface AddressService {
 
    AddressDTO getAddressSeller(Long id);
    List<String> getAllCities();

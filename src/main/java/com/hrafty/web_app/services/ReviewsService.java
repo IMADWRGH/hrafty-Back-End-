@@ -4,7 +4,7 @@ import com.hrafty.web_app.dto.ReviewsDTO;
 
 import java.util.List;
 
-public interface Reviews {
+public interface ReviewsService {
     ReviewsDTO create(ReviewsDTO reviewsDTO);
     List<ReviewsDTO> getAllReviews();
     List<ReviewsDTO> getAllReviews(Long id);

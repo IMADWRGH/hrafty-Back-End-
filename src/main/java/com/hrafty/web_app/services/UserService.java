@@ -1,11 +1,7 @@
 package com.hrafty.web_app.services;
 
 
-public interface Customer {
-
-
-
-
+public interface UserService {
 
 
 

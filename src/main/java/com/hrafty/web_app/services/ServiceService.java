@@ -4,7 +4,7 @@ import com.hrafty.web_app.dto.ServiceDTO;
 
 import java.util.List;
 
-public interface Service {
+public interface ServiceService {
      ServiceDTO create(ServiceDTO serviceDTO);
      List<ServiceDTO> getAllServices();
     List<ServiceDTO> getAllServices(Long id);

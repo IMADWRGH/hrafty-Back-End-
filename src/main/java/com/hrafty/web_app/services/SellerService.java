@@ -5,7 +5,7 @@ import com.hrafty.web_app.dto.SellerDTO;
 
 
 
-public interface Seller {
+public interface SellerService {
     SellerDTO getSeller(Long id);
 
     SellerDTO updateSeller(SellerDTO sellerDTO,Long id);

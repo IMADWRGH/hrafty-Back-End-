@@ -5,7 +5,7 @@ import com.hrafty.web_app.dto.OrderItemDTO;
 
 import java.util.List;
 
-public interface Order {
+public interface OrderService {
     OrderDTO create(Long customerId, List<OrderItemDTO> orderItemsDTO) throws Exception;
     List<OrderDTO> getAllOrders();
     List<OrderDTO> getAllOrders(Long id);
