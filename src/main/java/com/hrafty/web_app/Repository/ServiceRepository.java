@@ -13,10 +13,10 @@ import java.util.Set;
 public interface ServiceRepository extends JpaRepository<Service,Long> {
 
     List<Service> findAllBySellerId(Long id);
-    List<Service> findAllByNameAndType(String name,String type);
+    List<Service> findAllByNameAndCategory(String name,String category);
 
-    List<Service> findAllByType(String type);
+    List<Service> findAllByCategory(String category);
 
-    @Query("SELECT S.type FROM Service S")
-    Set<String> findAllType();
+    @Query("SELECT s.category FROM Service s")
+    Set<String> findAllCategories();
 }
