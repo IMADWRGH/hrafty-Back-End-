@@ -65,9 +65,9 @@ public class AuthService {
 
     public SellerDTO registerSeller(UserDTO userDTO, SellerDTO sellerDTO) throws Exception {
         User userToSave = userMapper.toEntity(userDTO);
-        userToSave.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userToSave.setPassword(passwordEncoder.encode(userDTO.password()));
         User savedUser = userRepository.save(userToSave);
-        Address savedAddress = addressRepository.save(addressMapper.toEntity(sellerDTO.getAddressId()));
+        Address savedAddress = addressRepository.save(addressMapper.toEntity(sellerDTO.addressId()));
         Seller sellerToSave = sellerMapper.toEntity(sellerDTO);
         sellerToSave.setUser(savedUser);
         sellerToSave.setAddress(savedAddress);
@@ -77,7 +77,7 @@ public class AuthService {
 
     public CustomerDTO registerCustomer(UserDTO userDTO,CustomerDTO customerDTO) throws Exception {
         User userToSave = userMapper.toEntity(userDTO);
-        userToSave.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userToSave.setPassword(passwordEncoder.encode(userDTO.password()));
         User savedUser = userRepository.save(userToSave);
         Customer customer = customerMapper.toEntity(customerDTO);
         customer.setUser(savedUser);
