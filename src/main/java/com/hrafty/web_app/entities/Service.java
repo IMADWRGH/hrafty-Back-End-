@@ -19,7 +19,7 @@ public class Service {
     private String description;
     private String image;
     private double price;
-    private String type;
+    private String category;
     private boolean status;
 
     @ManyToOne
@@ -34,13 +34,13 @@ public class Service {
 
     public Service() {}
 
-    public Service(Long id, String name, String description, String image, double price, String type, boolean status, Seller seller, List<Reviews> reviews, Panel panel) {
+    public Service(Long id, String name, String description, String image, double price, String category, boolean status, Seller seller, List<Reviews> reviews, Panel panel) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.image = image;
         this.price = price;
-        this.type = type;
+        this.category = category;
         this.status = status;
         this.seller = seller;
         this.reviews = reviews;
@@ -87,12 +87,12 @@ public class Service {
         this.price = price;
     }
 
-    public String getType() {
-        return type;
+    public String getCategory() {
+        return category;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public boolean isStatus() {
@@ -135,7 +135,7 @@ public class Service {
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
                 ", price=" + price +
-                ", type='" + type + '\'' +
+                ", type='" + category + '\'' +
                 ", status=" + status +
                 ", seller=" + seller +
                 ", reviews=" + reviews +
