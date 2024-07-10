@@ -33,4 +33,9 @@ public class ExceptionsHandler {
     public ResponseEntity<String> Exception(ServiceNotFoundException msg){
         return new ResponseEntity<>(msg.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<String> Exception(ProductNotFoundException msg){
+        return new ResponseEntity<>(msg.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }
