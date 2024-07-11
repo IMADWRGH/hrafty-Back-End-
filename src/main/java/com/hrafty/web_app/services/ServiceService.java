@@ -14,9 +14,11 @@ public interface ServiceService {
    void  deleteService(Long id);
 
     List<ServiceDTO> getAllServices(String name,String type);
-    List<ServiceDTO> getAllServices(String type);
+    List<ServiceDTO> getAllServices(String category);
+    List<ServiceDTO> getAllServicesByCityAndCategory(String city,String category);
+    List<ServiceDTO> getAllServicesCity(String category);
 
-    List<String> getAllTypes();
+    List<String> getAllCatrgories();
 
 
 
