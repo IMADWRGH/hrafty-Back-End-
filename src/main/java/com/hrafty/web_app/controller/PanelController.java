@@ -19,7 +19,9 @@ public class PanelController {
 
     @PostMapping(path = "/add")
     ResponseEntity<PanelDTO> createPanel(@RequestBody PanelDTO panelDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(panel.create(panelDTO));
+        PanelDTO panelDTO1= panel.create(panelDTO);
+        System.out.println(panelDTO1);
+        return ResponseEntity.status(HttpStatus.CREATED).body(panelDTO1);
     }
 
     @GetMapping(path="/getAll/{id}")

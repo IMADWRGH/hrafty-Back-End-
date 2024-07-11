@@ -24,14 +24,14 @@ public class ServiceController {
         List<ServiceDTO> serviceDTOS = service.getAllServices();
         return new ResponseEntity<>(serviceDTOS, HttpStatus.OK);
     }
-    @PostMapping(path = "/get/{name}/{type}")
-    public ResponseEntity<List<ServiceDTO>> getAllServices(@PathVariable("name")String name,@PathVariable("type") String type) {
-        List<ServiceDTO> serviceDTOS = service.getAllServices(name,type);
+    @PostMapping(path = "/get/{name}/{category}")
+    public ResponseEntity<List<ServiceDTO>> getAllServices(@PathVariable("name")String name,@PathVariable("category") String category) {
+        List<ServiceDTO> serviceDTOS = service.getAllServices(name,category);
         return new ResponseEntity<>(serviceDTOS, HttpStatus.OK);
     }
-    @PostMapping(path = "/get/{type}")
-    public ResponseEntity<List<ServiceDTO>> getAllServices(@PathVariable("type") String type) {
-        List<ServiceDTO> serviceDTOS = service.getAllServices(type);
+    @PostMapping(path = "/get/{category}")
+    public ResponseEntity<List<ServiceDTO>> getAllServices(@PathVariable("category") String category) {
+        List<ServiceDTO> serviceDTOS = service.getAllServices(category);
         return new ResponseEntity<>(serviceDTOS, HttpStatus.OK);
     }
 
