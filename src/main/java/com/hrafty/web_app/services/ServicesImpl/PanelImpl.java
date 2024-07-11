@@ -24,15 +24,6 @@ public class PanelImpl implements PanelService {
         this.panelMapper = panelMapper;
     }
 
-    @Override
-    public List<PanelDTO> getAllPanels() {
-        List<Panel> panels=panelRepository.findAll();
-        List<PanelDTO> panelDTOS=new ArrayList<>();
-        for (Panel panel:panels){
-            panelDTOS.add(panelMapper.toDTO(panel));
-        }
-        return panelDTOS;
-    }
 
     @Override
     public PanelDTO getPanelById(Long id) {
@@ -43,15 +34,10 @@ public class PanelImpl implements PanelService {
 
     @Override
     public PanelDTO create(PanelDTO panelDTO) {
-        return null;
+        Panel panel = panelMapper.toEntity(panelDTO);
+        panel = panelRepository.save(panel);
+        return panelMapper.toDTO(panel);
     }
-
-//    @Override
-//    public PanelDTO createPanel(PanelDTO panelDTO) {
-//        Panel panel = panelMapper.toEntity(panelDTO);
-//        panel = panelRepository.save(panel);
-//        return panelMapper.toDTO(panel);
-//    }
 
     @Override
     public PanelDTO updatePanel(Long id, PanelDTO updatedPanelDTO) {
@@ -73,17 +59,11 @@ public class PanelImpl implements PanelService {
     }
 
     @Override
-    public CustomerDTO getCustomerByPanelId(Long panelId) {
-        Panel panel = panelRepository.findById(panelId)
-                .orElseThrow(() -> new PanelNotFoundException("Panel not found"));
-        PanelDTO panelDTO=panelMapper.toDTO(panel);
-        if(panelDTO != null) {
-            return panelDTO.customer();
+    public List<PanelDTO> getPanelsByCustomer(Long customerId) {
+        List<Panel> panels=panelRepository.findAllByCustomer_Id(customerId);
+        for (Panel panel:panels){
+            System.out.println(panel.toString());
         }
         return null;
     }
-
-
-
-
 }

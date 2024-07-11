@@ -65,8 +65,7 @@ public class ServicesImpl implements ServiceService {
     public ServiceDTO getService(Long id) {
         Optional<Service> serviceOptional = serviceRepository.findById(id);
         if (serviceOptional.isPresent()) {
-            ServiceDTO serviceDTO = serviceMapper.toDTO(serviceOptional.get());
-            return serviceDTO;
+            return serviceMapper.toDTO(serviceOptional.get());
         }
         throw new ServiceNotFoundException("Service not found for id: ",new Throwable());
     }
@@ -98,14 +97,19 @@ public class ServicesImpl implements ServiceService {
     }
 
     @Override
-    public List<ServiceDTO> getAllServices(String name, String category) {
-        List<Service> serviceList=serviceRepository.findAllByNameAndCategory(name, category);
-        List<ServiceDTO> serviceDTOS = new ArrayList<>();
-        for (Service service : serviceList) {
-            serviceDTOS.add(serviceMapper.toDTO(service));
-        }
-        return serviceDTOS;
+    public List<ServiceDTO> getAllServices(String name, String type) {
+        return null;
     }
+
+//    @Override
+//    public List<ServiceDTO> listServicesByNamesAndCategory(String city, String category) {
+//        List<Service> serviceList=serviceRepository.findAllByNameAndCategory(city, category);
+//        List<ServiceDTO> serviceDTOS = new ArrayList<>();
+//        for (Service service : serviceList) {
+//            serviceDTOS.add(serviceMapper.toDTO(service));
+//        }
+//        return serviceDTOS;
+//    }
 
     @Override
     public List<ServiceDTO> getAllServices(String category) {
@@ -117,9 +121,19 @@ public class ServicesImpl implements ServiceService {
         return serviceDTOS;
     }
 
+    @Override
+    public List<ServiceDTO> getAllServicesByCityAndCategory(String city, String category) {
+        return null;
+    }
 
     @Override
-    public List<String> getAllTypes() {
+    public List<ServiceDTO> getAllServicesCity(String category) {
+        return null;
+    }
+
+
+    @Override
+    public List<String> getAllCatrgories() {
         return new ArrayList<>(serviceRepository.findAllCategories());
 
     }

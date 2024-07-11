@@ -6,7 +6,7 @@ import com.hrafty.web_app.dto.ProductDTO;
 import com.hrafty.web_app.entities.Product;
 import com.hrafty.web_app.entities.Seller;
 import com.hrafty.web_app.exception.InvalidRequest;
-import com.hrafty.web_app.exception.ServiceNotFoundException;
+import com.hrafty.web_app.exception.ProductNotFoundException;
 import com.hrafty.web_app.mapper.ProductMapper;
 import com.hrafty.web_app.services.ProductService;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 @Service
 public class ProductImpl implements ProductService {
     private final ProductMapper productMapper;
@@ -31,9 +33,9 @@ public class ProductImpl implements ProductService {
     public ProductDTO create(ProductDTO productDTO) {
         Seller seller = sellerRepository.findById(productDTO.sellerId())
                 .orElseThrow(() -> new EntityNotFoundException("Seller not found"));
-        com.hrafty.web_app.entities.Product product =productMapper.toEntity(productDTO);
+        Product product =productMapper.toEntity(productDTO);
         product.setSeller(seller);
-        com.hrafty.web_app.entities.Product saveProduct=productRepository.save(product);
+        Product saveProduct=productRepository.save(product);
         return productMapper.toDTO(saveProduct);
     }
 
@@ -58,16 +60,16 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public List<String> getAllCategories() {
+    public Set<String> getAllCategories() {
         return productRepository.findAllCategories();
     }
 
     @Override
     public void updateProduct(Long id, ProductDTO productDTO) {
-        com.hrafty.web_app.entities.Product product = productRepository.findById(id)
+        Product product = productRepository.findById(id)
                 .orElseThrow(() -> new InvalidRequest("product not found"));
         if (product != null) {
-            com.hrafty.web_app.entities.Product updatedProduct = productMapper.toEntity(productDTO);
+            Product updatedProduct = productMapper.toEntity(productDTO);
             updatedProduct.setId(product.getId());
             updatedProduct = productRepository.save(updatedProduct);
             productMapper.toDTO(updatedProduct);
@@ -77,12 +79,11 @@ public class ProductImpl implements ProductService {
 
     @Override
     public ProductDTO getProduct(Long id) {
-        Optional<com.hrafty.web_app.entities.Product> productOptional = productRepository.findById(id);
+        Optional<Product> productOptional = productRepository.findById(id);
         if (productOptional.isPresent()) {
-            ProductDTO productDTO = productMapper.toDTO(productOptional.get());
-            return productDTO;
+            return productMapper.toDTO(productOptional.get());
         }
-        throw new ServiceNotFoundException("Product not found for id: ",new Throwable());
+        throw new ProductNotFoundException("Product not found for id: ",new Throwable());
     }
 
     @Override
@@ -91,5 +92,13 @@ public class ProductImpl implements ProductService {
 
     }
 
-
+    @Override
+    public List<ProductDTO> getAllProducts(String category) {
+       List<Product> products= productRepository.findAllByCategory(category);
+       List<ProductDTO> productDTOS=new ArrayList<>();
+       for(Product product:products){
+           productDTOS.add(productMapper.toDTO(product));
+       }
+       return productDTOS;
+    }
 }
