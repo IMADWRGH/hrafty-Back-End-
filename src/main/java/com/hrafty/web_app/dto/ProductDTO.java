@@ -1,4 +1,14 @@
 package com.hrafty.web_app.dto;
 
-public record ProductDTO(Long id,String image,String name,String description,double price,String category,Long sellerId) {
+import java.util.List;
+
+public record ProductDTO(
+        Long id,
+        List<ImageDTO> images,
+        String name,
+        String description,
+        double price,
+        String category,
+        Long sellerId
+) {
 }
