@@ -38,4 +38,18 @@ public class ExceptionsHandler {
     public ResponseEntity<String> Exception(ProductNotFoundException msg){
         return new ResponseEntity<>(msg.getMessage(), HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(ImageNotFoundException.class)
+    public ResponseEntity<String> Exception(ImageNotFoundException msg){
+        return new ResponseEntity<>(msg.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<String> Exception(EmailAlreadyExistsException msg){
+        return new ResponseEntity<>(msg.getMessage(),HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<String> Exception(InvalidPasswordException msg){
+        return new ResponseEntity<>(msg.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
