@@ -15,7 +15,7 @@ public class Seller extends Auditable{
     private Long id;
     @Column(name="number_id",unique = true,updatable = false,nullable = false)
     private Long nb_license;
-    private String image;
+    private String imageURL;
     @Column(name = "sexe",length =4,nullable = false,columnDefinition = "VARCHAR(4) ")
     private String sexe;
     @Column(name = "nbr_phone",length = 12,nullable = false,columnDefinition = "VARCHAR(12) ")
@@ -43,10 +43,11 @@ public class Seller extends Auditable{
     public Seller() {
 
     }
-    public Seller(Long id, Long nb_license, String image, String sexe, String phone, String site, User user, List<Service> services, List<Product> products, Address address) {
+
+    public Seller(Long id, Long nb_license, String imageURL, String sexe, String phone, String site, User user, List<Service> services, List<Product> products, Address address) {
         this.id = id;
         this.nb_license = nb_license;
-        this.image = image;
+        this.imageURL = imageURL;
         this.sexe = sexe;
         this.phone = phone;
         this.site = site;
@@ -72,12 +73,12 @@ public class Seller extends Auditable{
         this.nb_license = nb_license;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getSexe() {
@@ -141,7 +142,7 @@ public class Seller extends Auditable{
         return "Seller{" +
                 "id=" + id +
                 ", nb_license=" + nb_license +
-                ", image='" + image + '\'' +
+                ", image='" + imageURL + '\'' +
                 ", sexe='" + sexe + '\'' +
                 ", phone='" + phone + '\'' +
                 ", site='" + site + '\'' +
