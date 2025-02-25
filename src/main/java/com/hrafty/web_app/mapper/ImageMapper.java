@@ -3,11 +3,9 @@ package com.hrafty.web_app.mapper;
 import com.hrafty.web_app.dto.ImageDTO;
 import com.hrafty.web_app.entities.Image;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", uses = {ProductMapper.class})
+@Mapper(componentModel = "spring", uses = {ProductMapper.class, ServiceMapper.class})
 public interface ImageMapper {
     ImageMapper INSTANCE = Mappers.getMapper(ImageMapper.class);
 

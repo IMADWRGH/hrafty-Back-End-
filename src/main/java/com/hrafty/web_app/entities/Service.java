@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,8 +17,10 @@ public class Service {
     private Long id;
 
     private String name;
+    @Column(length = 1000)
     private String description;
-    private String image;
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images;
     private double price;
     private String category;
     private boolean status;
@@ -34,11 +37,11 @@ public class Service {
 
     public Service() {}
 
-    public Service(Long id, String name, String description, String image, double price, String category, boolean status, Seller seller, List<Reviews> reviews, Panel panel) {
+    public Service(Long id, String name, String description, List<Image> images, double price, String category, boolean status, Seller seller, List<Reviews> reviews, Panel panel) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.image = image;
+        this.images = images;
         this.price = price;
         this.category = category;
         this.status = status;
@@ -71,12 +74,12 @@ public class Service {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public double getPrice() {
@@ -126,14 +129,25 @@ public class Service {
     public void setPanel(Panel panel) {
         this.panel = panel;
     }
+    public void addImage(Image image) {
+        if (images == null) {
+            images = new ArrayList<>();
+        }
+        images.add(image);
+        image.setService(this);
+    }
 
+    public void removeImage(Image image) {
+        images.remove(image);
+        image.setService(null);
+    }
     @Override
     public String toString() {
         return "Service{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
+                ", image='" + images + '\'' +
                 ", price=" + price +
                 ", type='" + category + '\'' +
                 ", status=" + status +

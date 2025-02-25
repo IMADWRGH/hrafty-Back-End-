@@ -2,6 +2,7 @@ package com.hrafty.web_app.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -9,28 +10,28 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String image;
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<Image> images;
     private String name;
+    @Column(length = 1000)
     private String description;
     private double price;
+
     private String category;
     @ManyToOne
     private Seller seller;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Reviews> reviews;
 
     public Product() {
     }
 
-    public Product(Long id, String image, String name, String description, double price, String category, Seller seller, List<Reviews> reviews) {
+    public Product(Long id, List<Image> images, String name, String description, double price, String category, Seller seller) {
         this.id = id;
-        this.image = image;
+        this.images = images;
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.seller = seller;
-        this.reviews = reviews;
     }
 
     public String getCategory() {
@@ -41,12 +42,12 @@ public class Product {
         this.category = category;
     }
 
-    public String getImage() {
-        return image;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public Long getId() {
@@ -88,24 +89,17 @@ public class Product {
     public void setSeller(Seller seller) {
         this.seller = seller;
     }
-
-    public List<Reviews> getReviews() {
-        return reviews;
+    public void addImage(Image image) {
+        if (images == null) {
+            images = new ArrayList<>();
+        }
+        images.add(image);
+        image.setProduct(this);
     }
 
-    public void setReviews(List<Reviews> reviews) {
-        this.reviews = reviews;
+    public void removeImage(Image image) {
+        images.remove(image);
+        image.setProduct(null);
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", seller=" + seller +
-                ", reviews=" + reviews +
-                '}';
-    }
 }

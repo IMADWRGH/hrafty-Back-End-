@@ -1,12 +1,16 @@
 package com.hrafty.web_app.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hrafty.web_app.dto.SellerDTO;
 import com.hrafty.web_app.dto.ServiceDTO;
 import com.hrafty.web_app.services.SellerService;
 import com.hrafty.web_app.services.ServiceService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,10 +31,13 @@ public class SellerController {
         return ResponseEntity.status(HttpStatus.OK).body(sellerDTO);
     }
 
-    @PostMapping(path = "/add")
-    public ResponseEntity<ServiceDTO> createService(@RequestBody ServiceDTO serviceDTO){
-        ServiceDTO serviceDTO1= service.create(serviceDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(serviceDTO1);
+    @PostMapping(path = "/add",consumes =  MediaType.MULTIPART_FORM_DATA_VALUE )
+    public ResponseEntity<ServiceDTO> createService(@RequestPart("service") String servicejson,
+                                                    @ModelAttribute("file") List<MultipartFile> files) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ServiceDTO serviceDTO = objectMapper.readValue(servicejson, ServiceDTO.class);
+        ServiceDTO createService= service.create(serviceDTO,files);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createService);
     }
     @GetMapping(path ="/getAll/{id}")
     public ResponseEntity<List<ServiceDTO>> getAllServices(@PathVariable("id") Long id) {

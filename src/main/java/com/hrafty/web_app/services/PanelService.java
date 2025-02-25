@@ -8,6 +8,7 @@ import java.util.List;
 public interface PanelService {
     public PanelDTO getPanelById(Long id);
     public PanelDTO create(PanelDTO panelDTO);
+    public PanelDTO createById(PanelDTO panelDTO , Long customerId);
     public PanelDTO updatePanel(Long id, PanelDTO updatedPanelDTO);
     public void deletePanel(Long id);
     public List<PanelDTO> getPanelsByCustomer(Long customerId);

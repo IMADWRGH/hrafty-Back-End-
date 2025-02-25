@@ -1,8 +1,9 @@
 package com.hrafty.web_app.services.ServicesImpl;
 
+import com.hrafty.web_app.Repository.CustomerRepository;
 import com.hrafty.web_app.Repository.PanelRepository;
-import com.hrafty.web_app.dto.CustomerDTO;
 import com.hrafty.web_app.dto.PanelDTO;
+import com.hrafty.web_app.entities.Customer;
 import com.hrafty.web_app.entities.Panel;
 import com.hrafty.web_app.exception.PanelNotFoundException;
 import com.hrafty.web_app.mapper.PanelMapper;
@@ -10,18 +11,19 @@ import com.hrafty.web_app.services.PanelService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PanelImpl implements PanelService {
     private final PanelRepository panelRepository;
     private final PanelMapper panelMapper;
+    private final CustomerRepository customerRepository;
 
 
-    public PanelImpl(PanelRepository panelRepository, PanelMapper panelMapper) {
+    public PanelImpl(PanelRepository panelRepository, PanelMapper panelMapper, CustomerRepository customerRepository) {
         this.panelRepository = panelRepository;
         this.panelMapper = panelMapper;
+        this.customerRepository = customerRepository;
     }
 
 
@@ -37,6 +39,17 @@ public class PanelImpl implements PanelService {
         Panel panel = panelMapper.toEntity(panelDTO);
         panel = panelRepository.save(panel);
         return panelMapper.toDTO(panel);
+    }
+
+    @Override
+    public PanelDTO createById(PanelDTO panelDTO , Long customerID) {
+        Customer customer =customerRepository.findById(customerID)
+                .orElseThrow(()->new EntityNotFoundException("Customer not found"));
+
+       Panel createPanel =panelMapper.toEntity(panelDTO);
+       createPanel.setCustomer(customer);
+       return panelMapper.toDTO(createPanel);
+
     }
 
     @Override

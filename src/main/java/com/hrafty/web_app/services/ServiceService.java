@@ -1,11 +1,13 @@
 package com.hrafty.web_app.services;
 
 import com.hrafty.web_app.dto.ServiceDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ServiceService {
-     ServiceDTO create(ServiceDTO serviceDTO);
+     ServiceDTO create(ServiceDTO serviceDTO, List<MultipartFile> files);
      List<ServiceDTO> getAllServices();
     List<ServiceDTO> getAllServices(Long id);
      void updateService(Long id , ServiceDTO serviceDTO);
@@ -14,11 +16,11 @@ public interface ServiceService {
    void  deleteService(Long id);
 
     List<ServiceDTO> getAllServices(String name,String type);
-    List<ServiceDTO> getAllServices(String category);
+    List<ServiceDTO> getAllServicesCategory(String category);
     List<ServiceDTO> getAllServicesByCityAndCategory(String city,String category);
-    List<ServiceDTO> getAllServicesCity(String category);
+    List<ServiceDTO> getAllServicesCity(String city);
 
-    List<String> getAllCatrgories();
+    List<String> getAllCategories();
 
 
 

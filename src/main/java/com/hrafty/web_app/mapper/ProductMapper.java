@@ -26,14 +26,17 @@ public interface ProductMapper {
         }
         return product.getId();
     }
+    
 
     @Mappings({
-            @Mapping(source = "seller.id", target = "sellerId")
+            @Mapping(source = "seller.id", target = "sellerId"),
+            @Mapping(source = "images", target = "images")
     })
     ProductDTO toDTO(Product entity);
 
     @Mappings({
-            @Mapping(source = "sellerId", target = "seller")
+            @Mapping(source = "sellerId", target = "seller"),
+            @Mapping(source = "images",target = "images")
     })
     Product toEntity(ProductDTO dto);
 }

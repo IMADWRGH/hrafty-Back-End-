@@ -4,9 +4,11 @@ import com.hrafty.web_app.dto.ReviewsDTO;
 import com.hrafty.web_app.entities.Reviews;
 import com.hrafty.web_app.entities.Seller;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class})
+@Mapper(componentModel = "spring", uses = {UserMapper.class,CustomerMapper.class})
 public interface ReviewsMapper {
     ReviewsMapper INSTANCE = Mappers.getMapper(ReviewsMapper.class);
 

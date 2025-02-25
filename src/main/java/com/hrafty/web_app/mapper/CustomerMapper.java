@@ -10,11 +10,11 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface CustomerMapper {
     @Mappings({
-            @Mapping(source = "user.id", target = "userId")
+            @Mapping(source = "user.id", target = "userId"),
     })
     CustomerDTO toDTO(Customer entity);
     @Mappings({
-            @Mapping(source = "userId", target = "user")
+            @Mapping(source = "userId", target = "user"),
     })
     Customer toEntity(CustomerDTO dto);
 }

@@ -35,7 +35,7 @@ public interface SellerMapper {
     SellerDTO toDTO(Seller entity);
 
     @Mappings({
-            @Mapping(source = "userId", target = "user")
+            @Mapping(source = "userId", target = "user"),
     })
     Seller toEntity(SellerDTO dto);
 }

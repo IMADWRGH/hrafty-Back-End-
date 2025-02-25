@@ -8,7 +8,6 @@ import com.hrafty.web_app.services.ServiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +31,7 @@ public class UserController {
 
     @GetMapping(path = "/service-categories")
     public ResponseEntity<List<String>> getAllServicesCategories(){
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAllCatrgories());
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllCategories());
     }
 
     @GetMapping(path = "/product-categories")
@@ -51,14 +50,30 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(product.getAllProducts(category));
     }
 
-    @PostMapping(path="/service/{city}")
-    public ResponseEntity<List<ServiceDTO>> getAllServiceByCities(@PathVariable String city){
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAllServices(city));
+    @GetMapping(path = "/services")
+    public ResponseEntity<List<ServiceDTO>> getAllServiceByCities() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllServices());
     }
-    @PostMapping(path="/service/{city}/{category}")
-    public ResponseEntity<List<ServiceDTO>> getAllServiceByCategories(@PathVariable("city") String city,@PathVariable("category") String category){
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAllServices(category));
+
+    @GetMapping(path = "/services/city/{city}/category/{category}")
+    public ResponseEntity<List<ServiceDTO>> getAllServiceByCityAndCategory(
+            @PathVariable("city") String city,
+            @PathVariable("category") String category) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllServicesByCityAndCategory(city, category));
     }
+
+    @GetMapping(path = "/services/category/{category}")
+    public ResponseEntity<List<ServiceDTO>> getAllServiceByCategory(
+            @PathVariable("category") String category) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllServicesCategory(category));
+    }
+
+    @GetMapping(path = "/services/city/{city}")
+    public ResponseEntity<List<ServiceDTO>> getAllServiceByCity(
+            @PathVariable("city") String city) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllServicesCity(city));
+    }
+
 
 
 }

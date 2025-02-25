@@ -11,4 +11,6 @@ public interface ReviewsService {
     void updateReviews(Long id , ReviewsDTO productDTO);
     ReviewsDTO getReview(Long id);
     void  deleteReview(Long id);
+
+    ReviewsDTO updateReview(Long id,ReviewsDTO updatedReviewsDTO);
 }

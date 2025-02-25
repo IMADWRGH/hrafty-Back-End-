@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/service")
-@CrossOrigin(origins = "http://localhost:4200")
 public class ServiceController {
     private  final ServiceService service;
 
@@ -31,7 +30,7 @@ public class ServiceController {
     }
     @PostMapping(path = "/get/{category}")
     public ResponseEntity<List<ServiceDTO>> getAllServices(@PathVariable("category") String category) {
-        List<ServiceDTO> serviceDTOS = service.getAllServices(category);
+        List<ServiceDTO> serviceDTOS = service.getAllServicesCategory(category);
         return new ResponseEntity<>(serviceDTOS, HttpStatus.OK);
     }
 

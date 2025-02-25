@@ -13,7 +13,7 @@ public class Customer extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String image;
+    private String imageURL;
     @Column(name = "sexe",length = 4,nullable = false,columnDefinition = "VARCHAR(4) ")
     private String sexe;
     @Column(name = "nbr_phone",length = 12,nullable = false,columnDefinition = "VARCHAR(12) ")
@@ -37,9 +37,9 @@ public class Customer extends Auditable{
 
     }
 
-    public Customer(Long id, String image, String sexe, String phone, User user, Panel panel, List<Order> orders, List<Reviews> reviews) {
+    public Customer(Long id, String imageURL, String sexe, String phone, User user, Panel panel, List<Order> orders, List<Reviews> reviews) {
         this.id = id;
-        this.image = image;
+        this.imageURL = imageURL;
         this.sexe = sexe;
         this.phone = phone;
         this.user = user;
@@ -56,12 +56,12 @@ public class Customer extends Auditable{
         this.id = id;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getSexe() {
@@ -117,7 +117,7 @@ public class Customer extends Auditable{
     public String toString() {
         return "Customer{" +
                 "id=" + id +
-                ", image='" + image + '\'' +
+                ", image=" + imageURL +
                 ", sexe='" + sexe + '\'' +
                 ", phone='" + phone + '\'' +
                 ", user=" + user +

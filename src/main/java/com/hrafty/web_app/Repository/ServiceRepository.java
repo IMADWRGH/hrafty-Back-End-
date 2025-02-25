@@ -13,7 +13,7 @@ import java.util.Set;
 public interface ServiceRepository extends JpaRepository<Service,Long> {
 
     List<Service> findAllBySellerId(Long id);
-//    List<Service> findAllByNameAndCategory(String name,String category);
+
 
     List<Service> findAllByCategory(String category);
 
@@ -25,6 +25,12 @@ public interface ServiceRepository extends JpaRepository<Service,Long> {
 
     @Query("SELECT s FROM Service s JOIN s.seller se JOIN se.address a WHERE a.name_city=:city AND s.category=:category")
     List<Service> findAllByCityAndCategory(@Param("city") String city, @Param("category") String category);
+
+    @Query("SELECT DISTINCT s FROM Service s LEFT JOIN FETCH s.images WHERE s.seller.id = :id")
+    List<Service> findAllBySellerIdWithImages(@Param("id") Long id);
+
+    @Query("SELECT DISTINCT s FROM Service s LEFT JOIN FETCH s.images")
+    List<Service> findAllByWithImages();
 
 }
 

@@ -36,7 +36,8 @@ public class JwtFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String jwt;
         final String userEmail;
-        if (request.getServletPath().contains("api/v1/auth") || request.getServletPath().contains("api/v1/service")) {
+        if (request.getServletPath().contains("api/v1/auth") || request.getServletPath().contains("api/v1/service")
+                || request.getServletPath().contains("api/v1/user")) {
             filterChain.doFilter(request, response);
             return;
         }

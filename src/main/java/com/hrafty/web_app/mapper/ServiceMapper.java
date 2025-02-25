@@ -15,12 +15,16 @@ public interface ServiceMapper {
             @Mapping(source = "seller.id", target = "sellerId"),
             @Mapping(source = "reviews", target = "reviewsDTOS"),
             @Mapping(source = "panel.id", target = "panelId"),
+            @Mapping(source = "images", target = "images")
+
     })
     ServiceDTO toDTO(Service entity);
     @Mappings({
             @Mapping(source = "sellerId", target = "seller"),
             @Mapping(source = "reviewsDTOS", target = "reviews"),
             @Mapping(source = "panelId", target = "panel"),
+            @Mapping(source = "images", target = "images")
+
     })
     Service toEntity(ServiceDTO dto);
 
