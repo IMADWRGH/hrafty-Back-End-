@@ -13,7 +13,7 @@ public class Panel {
     private Long id;
     //////Relations/////////
     @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
     @OneToMany(mappedBy = "panel")
