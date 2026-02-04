@@ -14,7 +14,7 @@
 	<name>hrafty.web-app</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>19</java.version>
+		<java.version>17</java.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<spring-cloud-azure.version>5.13.0</spring-cloud-azure.version>
 	</properties>
