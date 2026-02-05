@@ -15,6 +15,8 @@ import com.hrafty.web_app.mapper.UserMapper;
 import com.hrafty.web_app.services.ImageService;
 import com.hrafty.web_app.services.SellerService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -100,6 +102,12 @@ public class SellerImpl implements SellerService {
         sellerToSave.setAddress(savedAddress);
         Seller savedSeller = sellerRepository.save(sellerToSave);
         return sellerMapper.toDTO(savedSeller);
+    }
+
+    @Override
+    public Page<SellerDTO> getAllSellers(Pageable pageable) {
+      return  sellerRepository.findAll(pageable).map(sellerMapper::toDTO);
+
     }
 
 }
