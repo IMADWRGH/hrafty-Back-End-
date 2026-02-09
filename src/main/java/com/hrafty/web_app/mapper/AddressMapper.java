@@ -4,6 +4,7 @@ import com.hrafty.web_app.dto.AddressDTO;
 import com.hrafty.web_app.entities.Address;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring",uses = {SellerMapper.class})
@@ -35,4 +36,7 @@ public interface AddressMapper {
     @Mapping(source = "name_city", target = "name_city")
     @Mapping(source = "name_regional", target = "name_regional")
     Address toEntity(AddressDTO dto);
+
+    @Mapping(target = "id", ignore = true)
+    void updateAddressFromDTO(AddressDTO dto, @MappingTarget Address entity);
 }

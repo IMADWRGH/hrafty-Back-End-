@@ -33,11 +33,12 @@ public class AddressImpl implements AddressService {
 
     @Override
     public AddressDTO updateAddress(Long id, AddressDTO updateAddressDTO) {
-        Address address=addressRepository.findById(id)
-                .orElseThrow(()->new EntityNotFoundException("Address not found"));
-        if (address!=null){
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Address not found"));
 
-        }
-        return null;
+        addressMapper.updateAddressFromDTO(updateAddressDTO, address);
+        Address updatedAddress = addressRepository.save(address);
+
+        return addressMapper.toDTO(updatedAddress);
     }
 }
