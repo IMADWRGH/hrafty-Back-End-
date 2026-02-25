@@ -1,5 +1,6 @@
 package com.hrafty.web_app.entities;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -13,12 +14,18 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Data
 public abstract class Auditable {
 
-    @Column(name = "created_at", updatable = false, nullable = false)
     @CreationTimestamp
-    private Date createdAt;
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private LocalDateTime createdAt;  // Consistent type
 
-    @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
-    private Date updatedAt;
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    @Column(name = "is_deleted")
+    private Boolean deleted = false;
 
 }
