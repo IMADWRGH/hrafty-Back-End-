@@ -1,9 +1,10 @@
 package com.hrafty.web_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name = "image")
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +13,9 @@ public class Image {
     private String filename;
     @Column(name="url")
     private String url;
+    // true for main image that will display first
+    @Column(name = "is_primary")
+    private Boolean isPrimary = false;
 
 
     @ManyToOne
@@ -35,6 +39,8 @@ public class Image {
         this.service = service;
         this.product = product;
     }
+
+
 
     public Long getId() {
         return id;
@@ -60,6 +66,7 @@ public class Image {
         this.url = url;
     }
 
+    @JsonIgnore
     public Product getProduct() {
         return product;
     }
@@ -67,6 +74,8 @@ public class Image {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+    @JsonIgnore
     public Service getService() {
         return service;
     }
