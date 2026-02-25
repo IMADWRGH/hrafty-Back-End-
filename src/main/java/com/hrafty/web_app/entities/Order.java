@@ -1,5 +1,9 @@
 package com.hrafty.web_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hrafty.web_app.entities.enums.OrderStatus;
+import com.hrafty.web_app.entities.enums.PaymentMethod;
+import com.hrafty.web_app.entities.enums.PaymentStatus;
 import jakarta.persistence.*;
 
 
@@ -16,15 +20,35 @@ public class Order {
         @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
         private List<OrderItem> orderItems;
         private double totalPrice;
+        @Enumerated(EnumType.STRING)
+        @Column(nullable = false)
+        private OrderStatus status = OrderStatus.PENDING;
+
+        @Enumerated(EnumType.STRING)
+        private PaymentMethod paymentMethod;
+
+        @Enumerated(EnumType.STRING)
+        private PaymentStatus paymentStatus;
+
+        private String transactionId;
 
         public Order() {
         }
 
-        public Order(Long id, Customer customer, List<OrderItem> orderItems, double totalPrice) {
+        public Order(Long id, Customer customer, List<OrderItem> orderItems, double totalPrice, OrderStatus status) {
                 this.id = id;
                 this.customer = customer;
                 this.orderItems = orderItems;
                 this.totalPrice = totalPrice;
+                this.status = status;
+        }
+
+        public OrderStatus getStatus() {
+                return status;
+        }
+
+        public void setStatus(OrderStatus status) {
+                this.status = status;
         }
 
         public Long getId() {
@@ -35,6 +59,7 @@ public class Order {
                 this.id = id;
         }
 
+        @JsonIgnore
         public Customer getCustomer() {
                 return customer;
         }
@@ -43,6 +68,7 @@ public class Order {
                 this.customer = customer;
         }
 
+        @JsonIgnore
         public List<OrderItem> getOrderItems() {
                 return orderItems;
         }
@@ -66,6 +92,7 @@ public class Order {
                         ", customer=" + customer +
                         ", orderItems=" + orderItems +
                         ", totalPrice=" + totalPrice +
+                        ", status=" + status +
                         '}';
         }
 }
