@@ -16,7 +16,7 @@ public class Customer extends Auditable{
     private String imageURL;
     @Column(name = "sexe",length = 4,nullable = false,columnDefinition = "VARCHAR(4) ")
     private String sexe;
-    @Column(name = "nbr_phone",length = 12,nullable = false,columnDefinition = "VARCHAR(12) ")
+    @Column(name = "phone",length = 12,nullable = false,columnDefinition = "VARCHAR(12) ")
     private String phone;
 
     ////////////Relations///////
@@ -80,6 +80,7 @@ public class Customer extends Auditable{
         this.phone = phone;
     }
 
+    @JsonIgnore
     public Panel getPanel() {
         return panel;
     }
@@ -88,6 +89,7 @@ public class Customer extends Auditable{
         this.panel = panel;
     }
 
+    @JsonIgnore
     public List<Order> getOrders() {
         return orders;
     }
@@ -96,6 +98,7 @@ public class Customer extends Auditable{
         this.orders = orders;
     }
 
+    @JsonIgnore
     public List<Reviews> getReviews() {
         return reviews;
     }
