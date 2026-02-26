@@ -1,5 +1,6 @@
 package com.hrafty.web_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -74,6 +75,7 @@ public class Service {
         this.description = description;
     }
 
+    @JsonIgnore
     public List<Image> getImages() {
         return images;
     }
@@ -106,6 +108,7 @@ public class Service {
         this.status = status;
     }
 
+    @JsonIgnore
     public Seller getSeller() {
         return seller;
     }
@@ -114,6 +117,7 @@ public class Service {
         this.seller = seller;
     }
 
+    @JsonIgnore
     public List<Reviews> getReviews() {
         return reviews;
     }
@@ -122,6 +126,7 @@ public class Service {
         this.reviews = reviews;
     }
 
+    @JsonIgnore
     public Panel getPanel() {
         return panel;
     }
