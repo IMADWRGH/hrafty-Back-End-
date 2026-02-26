@@ -1,8 +1,10 @@
 package com.hrafty.web_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "order_item")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +28,7 @@ public class OrderItem {
         this.order = order;
     }
 
+
     public Long getId() {
         return id;
     }
@@ -34,6 +37,7 @@ public class OrderItem {
         this.id = id;
     }
 
+    @JsonIgnore
     public Product getProduct() {
         return product;
     }
@@ -58,6 +62,7 @@ public class OrderItem {
         this.totalPrice = totalPrice;
     }
 
+    @JsonIgnore
     public Order getOrder() {
         return order;
     }
