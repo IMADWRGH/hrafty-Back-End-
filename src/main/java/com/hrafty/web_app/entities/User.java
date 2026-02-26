@@ -1,12 +1,15 @@
 package com.hrafty.web_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hrafty.web_app.entities.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.security.Principal;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -76,7 +79,7 @@ public class User extends Auditable implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
     }
 
     public String getPassword() {
@@ -120,6 +123,7 @@ public class User extends Auditable implements UserDetails {
         this.role = role;
     }
 
+    @JsonIgnore
     public Seller getSeller() {
         return seller;
     }
@@ -128,6 +132,7 @@ public class User extends Auditable implements UserDetails {
         this.seller = seller;
     }
 
+    @JsonIgnore
     public Customer getCustomer() {
         return customer;
     }
