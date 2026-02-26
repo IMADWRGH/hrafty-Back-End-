@@ -1,5 +1,6 @@
 package com.hrafty.web_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.EqualsAndHashCode;
@@ -13,12 +14,12 @@ public class Seller extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="number_id",unique = true,updatable = false,nullable = false)
-    private Long nb_license;
+    @Column(name="number_id", unique = true, updatable = false, nullable = false)
+    private String nb_license;
     private String imageURL;
     @Column(name = "sexe",length =4,nullable = false,columnDefinition = "VARCHAR(4) ")
     private String sexe;
-    @Column(name = "nbr_phone",length = 12,nullable = false,columnDefinition = "VARCHAR(12) ")
+    @Column(name = "phone",length = 12,nullable = false,columnDefinition = "VARCHAR(12) ")
     private String phone;
     private String  site;
 
@@ -44,7 +45,7 @@ public class Seller extends Auditable{
 
     }
 
-    public Seller(Long id, Long nb_license, String imageURL, String sexe, String phone, String site, User user, List<Service> services, List<Product> products, Address address) {
+    public Seller(Long id, String nb_license, String imageURL, String sexe, String phone, String site, User user, List<Service> services, List<Product> products, Address address) {
         this.id = id;
         this.nb_license = nb_license;
         this.imageURL = imageURL;
@@ -65,11 +66,11 @@ public class Seller extends Auditable{
         this.id = id;
     }
 
-    public Long getNb_license() {
+    public String getNb_license() {
         return nb_license;
     }
 
-    public void setNb_license(Long nb_license) {
+    public void setNb_license(String nb_license) {
         this.nb_license = nb_license;
     }
 
@@ -105,6 +106,7 @@ public class Seller extends Auditable{
         this.site = site;
     }
 
+    @JsonIgnore
     public User getUser() {
         return user;
     }
@@ -113,6 +115,7 @@ public class Seller extends Auditable{
         this.user = user;
     }
 
+    @JsonIgnore
     public List<Service> getServices() {
         return services;
     }
@@ -121,6 +124,7 @@ public class Seller extends Auditable{
         this.services = services;
     }
 
+    @JsonIgnore
     public List<Product> getProducts() {
         return products;
     }
@@ -129,6 +133,7 @@ public class Seller extends Auditable{
         this.products = products;
     }
 
+    @JsonIgnore
     public Address getAddress() {
         return address;
     }
