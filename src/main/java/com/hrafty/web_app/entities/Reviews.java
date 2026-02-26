@@ -1,7 +1,11 @@
 package com.hrafty.web_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -10,7 +14,10 @@ public class Reviews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Min(1) @Max(5)
     private byte rating;
+    @Column(nullable = false ,name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
     private String comment;
 
     ////Relations////////
@@ -33,13 +40,22 @@ public class Reviews {
     public Reviews() {
     }
 
-    public Reviews(Long id, byte rating, String comment, Customer customer, Service service, Product product) {
+    public Reviews(Long id, byte rating, LocalDateTime createdAt, String comment, Customer customer, Service service, Product product) {
         this.id = id;
         this.rating = rating;
+        this.createdAt = createdAt;
         this.comment = comment;
         this.customer = customer;
         this.service = service;
         this.product = product;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -66,6 +82,7 @@ public class Reviews {
         this.comment = comment;
     }
 
+    @JsonIgnore
     public Customer getCustomer() {
         return customer;
     }
@@ -74,6 +91,7 @@ public class Reviews {
         this.customer = customer;
     }
 
+    @JsonIgnore
     public Service getService() {
         return service;
     }
@@ -82,6 +100,7 @@ public class Reviews {
         this.service = service;
     }
 
+    @JsonIgnore
     public Product getProduct() {
         return product;
     }
