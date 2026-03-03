@@ -1,6 +1,7 @@
 package com.hrafty.web_app.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hrafty.web_app.entities.enums.AccountStatus;
 import com.hrafty.web_app.entities.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,18 +30,30 @@ public class User extends Auditable implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified = false;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", updatable = false)
+    @Column(name = "role", nullable = true)
     private Role role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account_status", nullable = false)
+    private AccountStatus accountStatus = AccountStatus.PENDING;
+
 
     public User() {}
 
-    public User(Long id, String fullName, String email, String password, Role role) {
+    public User(Long id, String fullName, String email, String password, boolean emailVerified, Role role, AccountStatus accountStatus, Seller seller, Customer customer) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
+        this.emailVerified = emailVerified;
         this.role = role;
+        this.accountStatus = accountStatus;
+        this.seller = seller;
+        this.customer = customer;
     }
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
@@ -52,6 +65,23 @@ public class User extends Auditable implements UserDetails {
     private Customer customer;
 
     // Getters and Setters
+
+
+    public boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public AccountStatus getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
 
     public Long getId() {
         return id;
@@ -79,7 +109,8 @@ public class User extends Auditable implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
+        if (role == null) return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
     public String getPassword() {
@@ -98,7 +129,7 @@ public class User extends Auditable implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountStatus != AccountStatus.SUSPENDED;
     }
 
     @Override
@@ -108,7 +139,7 @@ public class User extends Auditable implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return accountStatus == AccountStatus.ACTIVE;
     }
 
     public void setPassword(String password) {
