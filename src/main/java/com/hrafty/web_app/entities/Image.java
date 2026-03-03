@@ -83,4 +83,12 @@ public class Image {
     public void setService(Service service) {
         this.service = service;
     }
+
+    public Boolean getPrimary() {
+        return isPrimary;
+    }
+
+    public void setPrimary(Boolean primary) {
+        isPrimary = primary;
+    }
 }
