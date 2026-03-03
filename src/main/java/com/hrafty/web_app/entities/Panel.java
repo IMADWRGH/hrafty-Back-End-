@@ -1,5 +1,6 @@
 package com.hrafty.web_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -38,6 +39,7 @@ public class Panel {
         this.id = id;
     }
 
+    @JsonIgnore
     public Customer getCustomer() {
         return customer;
     }
@@ -46,6 +48,7 @@ public class Panel {
         this.customer = customer;
     }
 
+    @JsonIgnore
     public List<Service> getServices() {
         return services;
     }
