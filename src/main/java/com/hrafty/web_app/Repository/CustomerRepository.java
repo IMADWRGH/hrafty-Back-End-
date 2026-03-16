@@ -5,4 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<com.hrafty.web_app.entities.Customer,Long> {
+
+    boolean existsByUserId(Long userId);
+
 }
