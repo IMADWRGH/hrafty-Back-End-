@@ -1,6 +1,7 @@
 package com.hrafty.web_app.services;
 
-import com.hrafty.web_app.dto.AddressDTO;
+import com.hrafty.web_app.dto.common.AddressDTO;
+import com.hrafty.web_app.dto.response.AddressResponseDTO;
 
 import java.util.List;
 import java.util.Set;
@@ -14,4 +15,6 @@ public interface AddressService {
    AddressDTO updateAddress(Long id, AddressDTO updateAddressDTO);
    void deleteAddress(Long id);
    Set<String> getAllCities();
+   AddressResponseDTO getAddressByCustomerId(Long customerId);
+   boolean existsById(Long id);
 }
