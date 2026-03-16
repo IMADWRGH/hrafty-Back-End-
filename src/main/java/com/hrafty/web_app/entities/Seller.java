@@ -14,8 +14,8 @@ public class Seller extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="number_id", unique = true, updatable = false, nullable = false)
-    private String nb_license;
+    @Column(name="nb_license", unique = true, updatable = false, nullable = false)
+    private String nbLicense;
     private String imageURL;
     @Column(name = "sexe",length =4,nullable = false,columnDefinition = "VARCHAR(4) ")
     private String sexe;
@@ -45,9 +45,9 @@ public class Seller extends Auditable{
 
     }
 
-    public Seller(Long id, String nb_license, String imageURL, String sexe, String phone, String site, User user, List<Service> services, List<Product> products, Address address) {
+    public Seller(Long id, String nbLicense, String imageURL, String sexe, String phone, String site, User user, List<Service> services, List<Product> products, Address address) {
         this.id = id;
-        this.nb_license = nb_license;
+        this.nbLicense = nbLicense;
         this.imageURL = imageURL;
         this.sexe = sexe;
         this.phone = phone;
@@ -67,11 +67,11 @@ public class Seller extends Auditable{
     }
 
     public String getNb_license() {
-        return nb_license;
+        return nbLicense;
     }
 
     public void setNb_license(String nb_license) {
-        this.nb_license = nb_license;
+        this.nbLicense = nb_license;
     }
 
     public String getImageURL() {
@@ -146,7 +146,7 @@ public class Seller extends Auditable{
     public String toString() {
         return "Seller{" +
                 "id=" + id +
-                ", nb_license=" + nb_license +
+                ", nb_license=" + nbLicense +
                 ", image='" + imageURL + '\'' +
                 ", sexe='" + sexe + '\'' +
                 ", phone='" + phone + '\'' +
