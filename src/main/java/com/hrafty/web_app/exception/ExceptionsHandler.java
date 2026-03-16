@@ -52,4 +52,42 @@ public class ExceptionsHandler {
     public ResponseEntity<String> Exception(InvalidPasswordException msg){
         return new ResponseEntity<>(msg.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<String> Exception(DuplicateResourceException msg){
+        return new ResponseEntity<>(msg.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<String> Exception(BadRequestException msg){
+        return new ResponseEntity<>(msg.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    // Add these missing handlers:
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<String> Exception(AuthenticationException msg){
+        return new ResponseEntity<>(msg.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<String> Exception(ForbiddenException msg){
+        return new ResponseEntity<>(msg.getMessage(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<String> Exception(InvalidTokenException msg){
+        return new ResponseEntity<>(msg.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ProfileIncompleteException.class)
+    public ResponseEntity<String> Exception(ProfileIncompleteException msg){
+        return new ResponseEntity<>(msg.getMessage(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> Exception(ResourceNotFoundException msg){
+        return new ResponseEntity<>(msg.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
 }
