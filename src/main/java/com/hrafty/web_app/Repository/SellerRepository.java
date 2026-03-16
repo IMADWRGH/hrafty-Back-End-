@@ -11,4 +11,7 @@ public interface SellerRepository extends JpaRepository<Seller,Long> {
     Seller findByUserId(Long id);
 
     Page<Seller> findAll(Pageable pageable);
+
+    boolean existsByNbLicense(String nbLicense);
+    boolean existsByUserId(Long userId);
 }
