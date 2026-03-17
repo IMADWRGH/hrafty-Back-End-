@@ -7,10 +7,14 @@ import com.hrafty.web_app.entities.enums.PaymentStatus;
 import jakarta.persistence.*;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders", indexes = {
+        @Index(name = "idx_order_customer_status", columnList = "customer_id, order_status"),
+        @Index(name = "idx_order_customer_date", columnList = "customer_id, order_date")
+})
 public class Order {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +25,11 @@ public class Order {
         private List<OrderItem> orderItems;
         private double totalPrice;
         @Enumerated(EnumType.STRING)
-        @Column(nullable = false)
+        @Column(nullable = false, name = "order_status")
         private OrderStatus status = OrderStatus.PENDING;
+
+        @Column(name = "order_date")
+        private LocalDateTime orderDate;
 
         @Enumerated(EnumType.STRING)
         private PaymentMethod paymentMethod;
@@ -83,6 +90,38 @@ public class Order {
 
         public void setTotalPrice(double totalPrice) {
                 this.totalPrice = totalPrice;
+        }
+
+        public LocalDateTime getOrderDate() {
+                return orderDate;
+        }
+
+        public void setOrderDate(LocalDateTime orderDate) {
+                this.orderDate = orderDate;
+        }
+
+        public PaymentMethod getPaymentMethod() {
+                return paymentMethod;
+        }
+
+        public void setPaymentMethod(PaymentMethod paymentMethod) {
+                this.paymentMethod = paymentMethod;
+        }
+
+        public PaymentStatus getPaymentStatus() {
+                return paymentStatus;
+        }
+
+        public void setPaymentStatus(PaymentStatus paymentStatus) {
+                this.paymentStatus = paymentStatus;
+        }
+
+        public String getTransactionId() {
+                return transactionId;
+        }
+
+        public void setTransactionId(String transactionId) {
+                this.transactionId = transactionId;
         }
 
         @Override
