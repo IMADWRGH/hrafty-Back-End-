@@ -1,16 +1,18 @@
 package com.hrafty.web_app.mapper;
 
-import com.hrafty.web_app.dto.UserDTO;
+import com.hrafty.web_app.dto.request.UserRequestDTO;
+import com.hrafty.web_app.dto.request.UserUpdateDTO;
+import com.hrafty.web_app.dto.response.UserResponseDTO;
 import com.hrafty.web_app.entities.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    default User map(Long id) {
+    @Named("mapUserById")
+    default User mapUserById(Long id) {
         if (id == null) {
             return null;
         }
@@ -19,13 +21,24 @@ public interface UserMapper {
         return user;
     }
 
-    default Long map(User user) {
+    @Named("mapUserToId")
+    default Long mapUserToId(User user) {
         if (user == null) {
             return null;
         }
         return user.getId();
     }
-    UserDTO toDTO(User entity);
 
-    User toEntity(UserDTO dto);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "customer", ignore = true)
+    User toEntity(UserRequestDTO dto);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "customer", ignore = true)
+    User toEntity(UserUpdateDTO dto);
+
+    UserResponseDTO toResponseDTO(User entity);
 }
