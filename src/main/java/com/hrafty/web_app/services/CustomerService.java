@@ -1,13 +1,35 @@
 package com.hrafty.web_app.services;
 
 
-import com.hrafty.web_app.dto.CustomerDTO;
-import com.hrafty.web_app.dto.UserDTO;
+import com.hrafty.web_app.dto.common.PageResponseDTO;
+import com.hrafty.web_app.dto.request.CustomerRequestDTO;
+import com.hrafty.web_app.dto.request.UserRequestDTO;
+import com.hrafty.web_app.dto.response.CustomerResponseDTO;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface CustomerService {
-    CustomerDTO getCustomer(Long id);
-    CustomerDTO create(UserDTO userDTO, CustomerDTO customerDTO, MultipartFile file);
+import java.util.List;
 
-    void updateCustomer(CustomerDTO customerDTO);
+public interface CustomerService {
+    CustomerResponseDTO getCustomer(Long id);
+
+    CustomerResponseDTO getCustomerByUserId(Long userId);
+
+    CustomerResponseDTO create(UserRequestDTO userRequestDTO, CustomerRequestDTO customerRequestDTO, MultipartFile file);
+
+    CustomerResponseDTO updateCustomer(Long id, CustomerRequestDTO customerRequestDTO);
+
+    // NEW METHODS
+    List<CustomerResponseDTO> getAllCustomers();
+
+    PageResponseDTO<CustomerResponseDTO> getAllCustomers(Pageable pageable);
+
+    void deleteCustomer(Long id);
+
+    CustomerResponseDTO updateCustomerImage(Long id, MultipartFile file);
+
+    boolean existsById(Long id);
+
+    long countCustomers();
+
 }
