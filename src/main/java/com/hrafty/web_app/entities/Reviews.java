@@ -9,7 +9,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "reviews")
+@Table(name = "reviews", uniqueConstraints = {
+        @UniqueConstraint(
+                name = "uk_customer_product_review",
+                columnNames = {"customer_id", "product_id"}
+        )
+})
 public class Reviews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
