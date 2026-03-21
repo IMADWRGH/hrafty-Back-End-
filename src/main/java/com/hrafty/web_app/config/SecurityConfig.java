@@ -95,12 +95,20 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // ── Public: no token required ──────────────────────────────
-                        .requestMatchers(
+                        .requestMatchers("/api/v1/auth/**",
                                 "/api/auth/register",
                                 "/api/auth/verify-email",
                                 "/api/auth/login",
                                 "/api/auth/refresh-token",
-                                "/api/auth/resend-verification"   // add to permitAll() list
+                                "/api/au th/resend-verification"   // add to permitAll() list
+                        ).permitAll()
+
+                        // Static resources (UI pages)
+                        .requestMatchers(
+                                "/*.html",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
                         ).permitAll()
 
                         // ── Setup token required (role=PENDING in JWT) ─────────────
@@ -130,7 +138,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // add prod domain here
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:4200"
+        ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
         configuration.setExposedHeaders(List.of("Authorization"));
