@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "api/v1/image")
 public class ImageController {
-    private final ImageService imageService;
+    //private final ImageService imageService;
 
-    public ImageController(ImageService imageService) {
-        this.imageService = imageService;
-    }
+    //public ImageController(ImageService imageService) {
+      //  this.imageService = imageService;
+   // }
 //
 //    @PostMapping("/upload/{id}")
 //    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file, @PathVariable Long id,@PathVariable String entityType) throws IOException {

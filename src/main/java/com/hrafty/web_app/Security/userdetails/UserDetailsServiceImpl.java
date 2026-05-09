@@ -14,10 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
-
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    // FIX: Removed explicit constructor — @RequiredArgsConstructor already generates it.
+    // Having both caused an ambiguous constructor error at startup.
 
     /*
      * Loads the user from DB by email.

@@ -81,8 +81,13 @@ public class ExceptionsHandler {
     }
 
     @ExceptionHandler(ProfileIncompleteException.class)
-    public ResponseEntity<String> Exception(ProfileIncompleteException msg){
-        return new ResponseEntity<>(msg.getMessage(), HttpStatus.FORBIDDEN);
+    public ResponseEntity<java.util.Map<String, Object>> Exception(ProfileIncompleteException msg){
+        java.util.Map<String, Object> body = new java.util.LinkedHashMap<>();
+        body.put("error", "PROFILE_INCOMPLETE");
+        body.put("message", msg.getMessage());
+        body.put("userId", msg.getUserId());
+        body.put("setupToken", msg.getSetupToken());
+        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)

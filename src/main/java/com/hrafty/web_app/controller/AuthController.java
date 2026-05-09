@@ -1,12 +1,10 @@
 package com.hrafty.web_app.controller;
 
+import com.hrafty.web_app.Security.userdetails.UserDetailsImpl;
 import com.hrafty.web_app.dto.request.*;
 import com.hrafty.web_app.dto.response.*;
-import com.hrafty.web_app.entities.User;
-import com.hrafty.web_app.Security.jwt.JwtService;
 import com.hrafty.web_app.services.AuthService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,11 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-    private final JwtService jwtService;
 
-    public AuthController(AuthService authService, JwtService jwtService) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
-        this.jwtService = jwtService;
     }
 
     // POST /api/auth/register — Step 1
@@ -71,7 +67,8 @@ public class AuthController {
     public ResponseEntity<AuthResponseDTO> completeCustomerProfile(
             @RequestBody @Valid CustomerRequestDTO dto,
             Authentication authentication) {
-        Long userId = ((User) authentication.getPrincipal()).getId();
+        // FIX: Principal is UserDetailsImpl (not User). Cast correctly to avoid ClassCastException.
+        Long userId = ((UserDetailsImpl) authentication.getPrincipal()).getId();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(authService.completeCustomerProfile(dto, userId));
     }
@@ -82,7 +79,8 @@ public class AuthController {
     public ResponseEntity<AuthResponseDTO> completeSellerProfile(
             @RequestBody @Valid SellerRequestDTO dto,
             Authentication authentication) {
-        Long userId = ((User) authentication.getPrincipal()).getId();
+        // FIX: Principal is UserDetailsImpl (not User). Cast correctly to avoid ClassCastException.
+        Long userId = ((UserDetailsImpl) authentication.getPrincipal()).getId();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(authService.completeSellerProfile(dto, userId));
     }
@@ -108,19 +106,4 @@ public class AuthController {
     }
 }
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SecurityConfig change — add "/api/auth/resend-verification" to permitAll()
-//
-// Replace your current permitAll block with this:
-// ─────────────────────────────────────────────────────────────────────────────
-
-/*
-    .requestMatchers(
-        "/api/auth/register",
-        "/api/auth/verify-email",
-        "/api/auth/resend-verification",   // ← add this
-        "/api/auth/login",
-        "/api/auth/refresh-token"
-    ).permitAll()
-*/
+

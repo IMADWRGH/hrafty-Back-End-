@@ -3,8 +3,6 @@ package com.hrafty.web_app.services.ServicesImpl;
 import com.hrafty.web_app.services.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,28 +13,6 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-/**
- * Sends HTML emails using Thymeleaf templates.
- *
- * Template files are located at:
- *   src/main/resources/templates/email/verification-code.html
- *   src/main/resources/templates/email/welcome.html
- *
- * Both methods are @Async — email sending happens in a background thread
- * so the HTTP response is returned to the user immediately without waiting
- * for the SMTP server. Add @EnableAsync to your main application class.
- *
- * Variables passed to each template:
- *
- *   verification-code.html:
- *     ${verificationCode}   — the 6-digit code string
- *     ${expirationMinutes}  — integer (15)
- *     ${frontendUrl}        — base URL for footer links
- *
- *   welcome.html:
- *     ${fullName}           — user's display name
- *     ${frontendUrl}        — base URL for CTA button and footer links
- */
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -46,11 +22,9 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
 
-    public EmailServiceImpl(JavaMailSender mailSender, TemplateEngine templateEngine, String fromEmail, String frontendUrl) {
+    public EmailServiceImpl(JavaMailSender mailSender, TemplateEngine templateEngine) {
         this.mailSender = mailSender;
         this.templateEngine = templateEngine;
-        this.fromEmail = fromEmail;
-        this.frontendUrl = frontendUrl;
     }
 
     @Value("${spring.mail.username}")
