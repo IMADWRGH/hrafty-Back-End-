@@ -22,4 +22,12 @@ public interface CustomerRepository extends JpaRepository<com.hrafty.web_app.ent
 """)
     Optional<Customer> findCustomerWithRelations(@Param("id") Long id);
 
+
+    @Query("""
+        SELECT c
+        FROM Customer c
+        LEFT JOIN FETCH c.user
+        WHERE c.user.id = :userId
+       """)
+    Optional<Customer> findCustomerByUserId(@Param("userId") Long userId);
 }
