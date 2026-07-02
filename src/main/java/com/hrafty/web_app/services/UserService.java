@@ -6,11 +6,9 @@ import com.hrafty.web_app.dto.response.UserResponseDTO;
 import com.hrafty.web_app.dto.common.PageResponseDTO;
 import com.hrafty.web_app.entities.enums.Role;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
     UserResponseDTO createUser(UserRequestDTO userRequestDTO);
 
