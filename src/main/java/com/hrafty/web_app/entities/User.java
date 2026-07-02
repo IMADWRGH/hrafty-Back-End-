@@ -9,12 +9,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
-@ToString
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 public class User extends Auditable implements UserDetails {
     @Id
@@ -28,6 +29,8 @@ public class User extends Auditable implements UserDetails {
     private String email;
 
     @Column(name = "password", nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private String password;
 
     @Column(name = "email_verified", nullable = false)
@@ -40,6 +43,15 @@ public class User extends Auditable implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "account_status", nullable = false)
     private AccountStatus accountStatus = AccountStatus.PENDING;
+
+    @Column(name = "failed_attempts")
+    private int failedAttempts = 0;
+
+    @Column(name = "lock_time")
+    private LocalDateTime lockTime;
+
+    @Column(name = "last_login")
+    private LocalDateTime lastLogin;
 
 
     public User() {}
@@ -55,6 +67,13 @@ public class User extends Auditable implements UserDetails {
         this.seller = seller;
         this.customer = customer;
     }
+
+    public int getFailedAttempts() { return failedAttempts; }
+    public void setFailedAttempts(int failedAttempts) { this.failedAttempts = failedAttempts; }
+    public LocalDateTime getLockTime() { return lockTime; }
+    public void setLockTime(LocalDateTime lockTime) { this.lockTime = lockTime; }
+    public LocalDateTime getLastLogin() { return lastLogin; }
+    public void setLastLogin(LocalDateTime lastLogin) { this.lastLogin = lastLogin; }
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, orphanRemoval = true)
